@@ -1,5 +1,5 @@
 from flaskr import app
-from flask import render_template, g
+from flask import render_template, g, request, redirect
 import sqlite3
 from flask_bootstrap import BOOTSTRAP_VERSION, Bootstrap
 
@@ -72,15 +72,55 @@ def index():
 
 @app.route('/result', methods=['GET', 'POST'])
 def result():
-    # データベース接続を取得
-    db = get_db()
 
-    # SQLクエリを実行し、結果をデータフレームとして読み込む
-    query = 'SELECT * FROM Tenant'
-    df = pd.read_sql(query, db)
-    
+    # もしPOSTメソッドならresult.htmlに値textと一緒に飛ばす
+    if request.method == 'POST':
+        # データベース接続を取得
+        db = get_db()
 
-    return render_template('result.html', df=df)
+        # HTMLでセレクトした駅情報を取得
+        station_name = request.form.get('selected_option')
+
+        # SQLクエリを実行し、StationNumを取得
+        cursor = db.cursor()
+        cursor.execute('SELECT stationId FROM Station WHERE stationName=?', station_name)
+        station_num = cursor.fetchone()
+
+        print(station_name)
+        print(station_num)
+
+        # カーソルを閉じる
+        cursor.close()
+
+        if station_num is not None:
+            station_num = station_num[0]  # クエリの結果からStationNumを取得
+
+            # Tena_StationIdがStation_Numと一致するテナントデータを取得し、DataFrameに読み込む
+            query = f"SELECT * FROM Tenant WHERE Tena_StationId={station_num}"
+            df = pd.read_sql(query, db)
+
+            if not df.empty:
+                # 結果をHTMLテンプレートに渡す
+                return render_template('result.html', df=df)
+            else:
+                return 'No tenant data found for the selected station.'
+        else:
+            return f'StationNum for {station_name} not found'
+
+        return render_template('result.html', df=station_num)
+        # 結果を表示する
+        if station_num is not None:
+            query = f"SELECT * FROM Tenant WHERE tena_stationId={station_num}"
+            df = pd.read_sql(query, db)
+
+            if not df.empty:
+                return render_template('result.html', df=df)
+        else:
+            return render_template('index.html')
+        
+    # POSTメソッド以外なら、index.htmlに飛ばす
+    else:
+        return render_template('index.html')
 
 
 if __name__ == '__main__':
