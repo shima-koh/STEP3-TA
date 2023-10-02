@@ -1,0 +1,69 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}TOPページ{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <h1>IndeMode TOP</h1>
+
+    <!-- 検索ボックスを表示-->
+    <div class="row">
+        <!-- 路線検索-->
+        <form method="POST" action="/result"> <!-- POSTリクエストを送信するフォーム -->
+            <div class="col-md-4">
+                <div class="input-group">
+                    <select class="form-select" name="selected_option" aria-label="Example select with button addon">
+                        <option selected>駅検索...</option>
+                        <option value="1">有楽町</option>
+                        <option value="2">神田</option>
+                        <option value="3">東京駅</option>
+                    </select>
+                    <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->
+                </div>
+            </div>
+        </form>
+        
+        
+        <!-- 駅検索-->
+        <div class="col-md-4">
+            <div class="input-group">
+                <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                    <option selected>mitaiou ...</option>
+                    <option value="1">有楽町</option>
+                    <option value="2">神田</option>
+                    <option value="3">東京駅</option>
+                </select>
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- セレクトボックスのカスタムスタイル -->
+    <style>
+        .form-select {
+            width: 200px; /* セレクトボックスの幅を調整 */
+        }
+    </style>
+    
+    {% for index, row in df.iterrows() %}
+        <div class="card boreder-primary mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="..." class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Tenant Name {{ row["tena_name"] }}</h5>
+                        <p class="card-text">Tenant Name {{ row["tena_name"] }}</p>
+                        <p class="card-text"><small class="text-body-secondary">tena_station {{ row["tena_stationId"] }}</small></p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <h1>IndeMode SEarch END</h1>
+
+</div>
+{% endblock %}
