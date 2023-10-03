@@ -79,21 +79,22 @@ def result():
         db = get_db()
 
         # HTMLでセレクトした駅情報を取得
-        station_name = request.form.get('selected_option')
+        station_num = request.form.get('selected_option')
+        #station_name = request.form.get('selected_option')
 
         # SQLクエリを実行し、StationNumを取得
-        cursor = db.cursor()
-        cursor.execute('SELECT stationId FROM Station WHERE stationName=?', station_name)
-        station_num = cursor.fetchone()
+        #cursor = db.cursor()
+        #cursor.execute('SELECT stationId FROM Station WHERE stationName=?', station_name)
+        #station_num = cursor.fetchone()
 
-        print(station_name)
-        print(station_num)
+        #print(station_name)
+        #print(station_num)
 
         # カーソルを閉じる
-        cursor.close()
+        #cursor.close()
 
         if station_num is not None:
-            station_num = station_num[0]  # クエリの結果からStationNumを取得
+            #station_num = station_num[0]  # クエリの結果からStationNumを取得
 
             # Tena_StationIdがStation_Numと一致するテナントデータを取得し、DataFrameに読み込む
             query = f"SELECT * FROM Tenant WHERE Tena_StationId={station_num}"
@@ -105,7 +106,7 @@ def result():
             else:
                 return 'No tenant data found for the selected station.'
         else:
-            return f'StationNum for {station_name} not found'
+            return f'StationNum for {station_num} not found'
 
         return render_template('result.html', df=station_num)
         # 結果を表示する
