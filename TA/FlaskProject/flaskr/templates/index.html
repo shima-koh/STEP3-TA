@@ -1,4 +1,4 @@
-{% extends "bootstrap/base.html" %}
+{% extends "base.html" %}
 {% block title %}TOPページ{% endblock %}
 
 {% block content %}
@@ -9,13 +9,14 @@
             <img class="logo" src="figure/Logo.png" alt="logo">
             <nav class="nav nav-masthead justify-content-center float-md-end">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
-                <a class="nav-link" href="contentPage.html">Contents</a>
+                <a class="nav-link" href="MyPage.html">MyPage</a>
+                <a class="nav-link" href="Logout.html">Logout</a>
             </nav>
         </div>
     </nav>
 </header>
 
-<div class="container">
+<div class="container-fluid">
 
     <h1>IndeMode TOP</h1>
 
@@ -24,9 +25,9 @@
         <!-- 路線検索-->
         <form method="POST" action="/result"> <!-- POSTリクエストを送信するフォーム -->
             <div class="col-md-4">
-                <div class="input-group">
+                <div class="input-group ">
                     <select class="form-select" name="selected_option" aria-label="Example select with button addon">
-                        <option selected>駅wo検索...</option>
+                        <option selected>駅検索...</option>
                         <option value="1">有楽町</option>
                         <option value="2">神田</option>
                         <option value="3">東京駅</option>
@@ -36,44 +37,26 @@
             </div>
         </form>
 
-        <div class="row">
-            <!-- 路線検索-->
-            <form method="POST" action="/map"> <!-- POSTリクエストを送信するフォーム -->
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <select class="form-select" name="selected_option" aria-label="Example select with button addon">
-                            <option selected>MAP検索...</option>
-                            <option value="1">有楽町</option>
-                            <option value="2">神田</option>
-                            <option value="3">東京駅</option>
-                        </select>
-                        <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->
-                    </div>
+        <!-- 路線検索-->
+        <form method="POST" action="/map"> <!-- POSTリクエストを送信するフォーム -->
+            <div class="col-md-4">
+                <div class="input-group">
+                    <select class="form-select" name="selected_option" aria-label="Example select with button addon">
+                        <option selected>MAP検索...</option>
+                        <option value="1">有楽町</option>
+                        <option value="2">神田</option>
+                        <option value="3">東京駅</option>
+                    </select>
+                    <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->
                 </div>
-            </form>
-        
-        
-        <!-- 駅検索-->
-        <div class="col-md-4">
-            <div class="input-group">
-                <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                    <option selected>mitaiou ...</option>
-                    <option value="1">有楽町</option>
-                    <option value="2">神田</option>
-                    <option value="3">東京駅</option>
-                </select>
-                <button class="btn btn-outline-secondary" type="submit">Search</button>
             </div>
-        </div>
+        </form>
+        
     </div>
     
-    <!-- セレクトボックスのカスタムスタイル -->
-    <style>
-        .form-select {
-            width: 200px; /* セレクトボックスの幅を調整 */
-        }
-    </style>
-    
+    <h3><br>おススメテナント<br></h3>
+
+
     {% for index, row in df.iterrows() %}
         <div class="card boreder-primary mb-3" style="max-width: 540px;">
             <div class="row g-0">
@@ -92,7 +75,7 @@
         </div>
     {% endfor %}
 
-    <h1>IndeMode SEarch END</h1>
+    
 
 </div>
 {% endblock %}

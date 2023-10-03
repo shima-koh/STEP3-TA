@@ -1,0 +1,13 @@
+
+form {
+    padding: 10px; /* フォームの内側の余白を設定 */
+}
+
+/* カードに影を付ける */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* X、Y、ぼかしの半径、色を設定 */
+}
+
+header {
+    background-color: rgb(51, 51, 51); /* Header color set*/
+}

@@ -1,8 +1,6 @@
 from flaskr import app
 from flask import render_template, g, request, redirect
 import sqlite3
-from flask_bootstrap import BOOTSTRAP_VERSION, Bootstrap
-
 from io import BytesIO
 from PIL import Image
 import base64
@@ -11,14 +9,13 @@ import numpy as np
 import pandas as pd
 
 import folium
-
 from folium.plugins import HeatMap
 
 # テーブル作成
 #con.execute("CREATE TABLE Tenant(id INTEGER PRIMARY KEY, tena_name STRING, tena_stationId INTEGER)") #テナントDB
 #con.execute("CREATE TABLE User(id INTEGER PRIMARY KEY, user_name STRING, pw INTEGER)") #ユーザーDB
 
-bootstrap = Bootstrap(app)
+
 
 # データベースファイルのパス
 DATABASE = 'app.db'

@@ -1,29 +1,25 @@
-{% extends "bootstrap/base.html" %}
+{% extends "base.html" %}
 {% block title %}TOPページ{% endblock %}
 
 {% block content %}
 <div class="container">
-
     <h1>RESULT</h1>
-
     {% for index, row in df.iterrows() %}
-    <div class="card boreder-primary mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="..." class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">Tenant Name {{ row["tena_name"] }}</h5>
-                    <p class="card-text">Tenant Name {{ row["tena_name"] }}</p>
-                    <p class="card-text"><small class="text-body-secondary">tena_station {{ row["tena_stationId"] }}</small></p>
-                    
+        <div class="card boreder-primary mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="..." class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Tenant Name {{ row["tena_name"] }}</h5>
+                        <p class="card-text">Rent {{ row["tena_rent"] }} 円/month / Area {{ row["tena_area"] }}坪</p>
+                        <p class="card-text"><small class="text-body-secondary">Address {{ row["tena_adress"] }}</small></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-{% endfor %}
-
-
+    {% endfor %}
 </div>
+
 {% endblock %}
