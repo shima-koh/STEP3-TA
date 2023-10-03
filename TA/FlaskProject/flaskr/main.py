@@ -47,17 +47,12 @@ def close_db(error):
 def index():
     # データベース接続を取得
     db = get_db()
-    #cursor = db.cursor()
-
-    #cursor.execute("SELECT * FROM Tenant")
-    #data = cursor.fetchall()
-    
     # SQLクエリを実行し、結果をデータフレームとして読み込む
     query = 'SELECT * FROM Tenant'
     df = pd.read_sql(query, db)
     
-    # カーソルを閉じる
-    #cursor.close()
+    query = 'SELECT * FROM Station'
+    df_station = pd.read_sql(query, db)
 
     #Matplotlib
     fig = plt.figure()
@@ -69,7 +64,7 @@ def index():
     # --------------------------------------
     img = fig_to_base64_img(fig)
 
-    return render_template('index.html', img=img, df=df)
+    return render_template('index.html', img=img, df=df,df_station=df_station)
 
 @app.route('/result', methods=['GET', 'POST'])
 def result():

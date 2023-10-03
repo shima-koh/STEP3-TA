@@ -8,47 +8,43 @@
         <div class="container-fluid">
             <img class="logo" src="figure/Logo.png" alt="logo">
             <nav class="nav nav-masthead justify-content-center float-md-end">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                <a class="nav-link" href="MyPage.html">MyPage</a>
-                <a class="nav-link" href="Logout.html">Logout</a>
+                <a class="nav-link active" aria-current="page" href="#" style="color: white;">Home</a>
+                <a class="nav-link"  style="color: white;" href="MyPage.html">MyPage</a>
+                <a class="nav-link"  style="color: white;" href="Logout.html">Logout</a>
             </nav>
         </div>
     </nav>
 </header>
 
-<div class="container-fluid">
+<div class="container-fluid text-center">
 
     <h1>IndeMode TOP</h1>
 
     <!-- 検索ボックスを表示-->
-    <div class="row">
+    <div class="row justify-content-center">
         <!-- 路線検索-->
-        <form method="POST" action="/result"> <!-- POSTリクエストを送信するフォーム -->
-            <div class="col-md-4">
-                <div class="input-group ">
-                    <select class="form-select" name="selected_option" aria-label="Example select with button addon">
-                        <option selected>駅検索...</option>
-                        <option value="1">有楽町</option>
-                        <option value="2">神田</option>
-                        <option value="3">東京駅</option>
-                    </select>
-                    <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->
-                </div>
+        <form method="POST" action="/result" class="col-md-4"> <!-- POSTリクエストを送信するフォーム -->
+            <div class="input-group ">
+                <select class="form-select" name="selected_option" aria-label="Example select with button addon">
+                    <option selected>駅検索...</option>
+                    {% for index, row in df_station.iterrows() %}
+                    <option value="{{ row['stationName'] }}">{{ row['stationName'] }}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->
             </div>
         </form>
 
         <!-- 路線検索-->
-        <form method="POST" action="/map"> <!-- POSTリクエストを送信するフォーム -->
-            <div class="col-md-4">
-                <div class="input-group">
-                    <select class="form-select" name="selected_option" aria-label="Example select with button addon">
-                        <option selected>MAP検索...</option>
-                        <option value="1">有楽町</option>
-                        <option value="2">神田</option>
-                        <option value="3">東京駅</option>
-                    </select>
-                    <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->
-                </div>
+        <form method="POST" action="/map" class="col-md-4"> <!-- POSTリクエストを送信するフォーム -->
+            <div class="input-group">
+                <select class="form-select" name="selected_option" aria-label="Example select with button addon">
+                    <option selected>MAP検索...</option>
+                    <option value="1">有楽町</option>
+                    <option value="2">神田</option>
+                    <option value="3">東京駅</option>
+                </select>
+                <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->
             </div>
         </form>
         
@@ -56,26 +52,24 @@
     
     <h3><br>おススメテナント<br></h3>
 
-
-    {% for index, row in df.iterrows() %}
-        <div class="card boreder-primary mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="..." class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Tenant Name {{ row["tena_name"] }}</h5>
-                        <p class="card-text">Tenant Name {{ row["tena_name"] }}</p>
-                        <p class="card-text"><small class="text-body-secondary">tena_station {{ row["tena_stationId"] }}</small></p>
-                        
+    <div class="row justify-content-center">
+        {% for index, row in df.iterrows() %}
+            <div class="card border-black" style="max-width: 600px; margin: 10px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="..." class="img-fluid rounded-start" style="max-width: 25%;" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body" style="text-align: left;">
+                            <h5 class="card-title">Tenant Name {{ row["tena_name"] }}</h5>
+                            <p class="card-text">Tenant Name {{ row["tena_name"] }}</p>
+                            <p class="card-text"><small class="text-body-secondary">tena_station {{ row["tena_stationId"] }}</small></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-
-    
-
+        {% endfor %}
+    </div>
 </div>
+
 {% endblock %}
