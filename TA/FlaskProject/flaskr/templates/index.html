@@ -35,6 +35,22 @@
                 </div>
             </div>
         </form>
+
+        <div class="row">
+            <!-- 路線検索-->
+            <form method="POST" action="/map"> <!-- POSTリクエストを送信するフォーム -->
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <select class="form-select" name="selected_option" aria-label="Example select with button addon">
+                            <option selected>MAP検索...</option>
+                            <option value="1">有楽町</option>
+                            <option value="2">神田</option>
+                            <option value="3">東京駅</option>
+                        </select>
+                        <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->
+                    </div>
+                </div>
+            </form>
         
         
         <!-- 駅検索-->

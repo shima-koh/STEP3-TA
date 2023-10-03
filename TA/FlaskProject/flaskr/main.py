@@ -127,12 +127,44 @@ def result():
     else:
         return render_template('index.html')
 
-@app.route('/map')
+@app.route('/map', methods=['GET', 'POST'])
 def map():
-    map = folium.Map(location=[32.8032, 130.7080],zoom_start = 15) 
-    marker = folium.Marker([32.8032, 130.7080], popup="熊本市役所")
-    marker.add_to(map)
-    return map._repr_html_()
+
+    if request.method == 'POST':
+        # データベース接続を取得
+        db = get_db()
+        # HTMLでセレクトした駅情報を取得
+        station_num = request.form.get('selected_option')
+
+        if station_num is not None:
+            cursor = db.cursor()
+            cursor.execute('SELECT stationName FROM Station WHERE stationId=?', station_num)
+            station_name = cursor.fetchone()
+            cursor.execute('SELECT lat FROM Station WHERE stationId=?', station_num)
+            station_lat = cursor.fetchone()
+            cursor.execute('SELECT lon FROM Station WHERE stationId=?', station_num)
+            station_lon = cursor.fetchone()
+
+            # カーソルを閉じる
+            cursor.close()
+
+            print(station_name[0])
+            print(station_lat[0])
+            print(station_lon[0])
+
+            map = folium.Map(location=[station_lat[0], station_lon[0]],zoom_start = 15) 
+            
+            en = folium.Circle(
+            location=[station_lat[0], station_lon[0]], # 中心
+            radius=100, # 半径100m
+            color='#ff0000', # 枠の色
+            fill_color='#0000ff' # 塗りつぶしの色
+            )
+            en.add_to(map)
+
+            marker = folium.Marker([station_lat[0], station_lon[0]], popup=station_name)
+            marker.add_to(map)
+            return map._repr_html_()
 
 
 if __name__ == '__main__':
