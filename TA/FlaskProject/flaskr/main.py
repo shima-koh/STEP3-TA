@@ -10,6 +10,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+import folium
+
+from folium.plugins import HeatMap
+
 # テーブル作成
 #con.execute("CREATE TABLE Tenant(id INTEGER PRIMARY KEY, tena_name STRING, tena_stationId INTEGER)") #テナントDB
 #con.execute("CREATE TABLE User(id INTEGER PRIMARY KEY, user_name STRING, pw INTEGER)") #ユーザーDB
@@ -73,7 +77,7 @@ def index():
 @app.route('/result', methods=['GET', 'POST'])
 def result():
 
-    # もしPOSTメソッドならresult.htmlに値textと一緒に飛ばす
+    # もしPOSTメソッドならresult.htmlに値dfと一緒に飛ばす
     if request.method == 'POST':
         # データベース接続を取得
         db = get_db()
@@ -122,6 +126,13 @@ def result():
     # POSTメソッド以外なら、index.htmlに飛ばす
     else:
         return render_template('index.html')
+
+@app.route('/map')
+def map():
+    map = folium.Map(location=[32.8032, 130.7080],zoom_start = 15) 
+    marker = folium.Marker([32.8032, 130.7080], popup="熊本市役所")
+    marker.add_to(map)
+    return map._repr_html_()
 
 
 if __name__ == '__main__':
