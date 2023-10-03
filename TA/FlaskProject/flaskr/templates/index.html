@@ -28,7 +28,7 @@
                 <select class="form-select" name="selected_option" aria-label="Example select with button addon">
                     <option selected>駅検索...</option>
                     {% for index, row in df_station.iterrows() %}
-                    <option value="{{ row['stationName'] }}">{{ row['stationName'] }}</option>
+                    <option value="{{ row['stationId'] }}">{{ row['stationName'] }}</option>
                     {% endfor %}
                 </select>
                 <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->

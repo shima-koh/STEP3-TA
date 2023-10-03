@@ -76,15 +76,41 @@ def result():
 
         # HTMLでセレクトした駅情報を取得
         station_num = request.form.get('selected_option')
+        
 
         if station_num is not None:
             # Tena_StationIdがStation_Numと一致するテナントデータを取得し、DataFrameに読み込む
             query = f"SELECT * FROM Tenant WHERE Tena_StationId={station_num}"
             df = pd.read_sql(query, db)
 
+            cursor = db.cursor()
+            cursor.execute('SELECT stationName FROM Station WHERE stationId=?', station_num)
+            station_name = cursor.fetchone()
+            cursor.execute('SELECT lat FROM Station WHERE stationId=?', station_num)
+            station_lat = cursor.fetchone()
+            cursor.execute('SELECT lon FROM Station WHERE stationId=?', station_num)
+            station_lon = cursor.fetchone()
+
+            # カーソルを閉じる
+            cursor.close()
+
+            map = folium.Map(location=[station_lat[0], station_lon[0]],zoom_start = 15,tiles='OpenStreetMap') 
+
+            #MapへのCircle表示
+            en = folium.Circle(
+            location=[station_lat[0], station_lon[0]], # 中心
+            radius=100, # 半径100m
+            color='#ff0000', # 枠の色
+            fill_color='#0000ff' # 塗りつぶしの色
+            )
+            en.add_to(map)
+
+            marker = folium.Marker([station_lat[0], station_lon[0]], popup=station_name[0])
+            marker.add_to(map)
+
             if not df.empty:
                 # 結果をHTMLテンプレートに渡す
-                return render_template('result.html', df=df)
+                return render_template('result.html', df=df, map_html=map._repr_html_())
             else:
                 return 'No tenant data found for the selected station.'
         else:
