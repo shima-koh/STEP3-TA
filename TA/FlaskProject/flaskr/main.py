@@ -81,7 +81,10 @@ def result():
         if station_num is not None:
             # Tena_StationIdがStation_Numと一致するテナントデータを取得し、DataFrameに読み込む
             query = f"SELECT * FROM Tenant WHERE Tena_StationId={station_num}"
-            df = pd.read_sql(query, db)
+            df_rent = pd.read_sql(query, db)
+
+            query = f"SELECT * FROM Tenant WHERE Tena_StationId={station_num}"
+            df_area = pd.read_sql(query, db)
 
             cursor = db.cursor()
             cursor.execute('SELECT stationName FROM Station WHERE stationId=?', station_num)
@@ -108,9 +111,9 @@ def result():
             marker = folium.Marker([station_lat[0], station_lon[0]], popup=station_name[0])
             marker.add_to(map)
 
-            if not df.empty:
+            if not df_rent.empty:
                 # 結果をHTMLテンプレートに渡す
-                return render_template('result.html', df=df, map_html=map._repr_html_())
+                return render_template('result.html',df_area=df_area, df_rent=df_rent, map_html=map._repr_html_())
             else:
                 return 'No tenant data found for the selected station.'
         else:
