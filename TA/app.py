@@ -40,9 +40,13 @@ station_list = df5['駅名']
 
 #streamlitによる表示
 
+
 # アプリタイトル
-st.title('IndeMode')
-st.caption('Indemodeはサロン開業を検討したい方に向けた物件検索・マーケティング分析アプリです。')
+st.title('IndéMode')
+
+image_url = 'https://cdn-scissors.gigaviewer.com/image/scale/5483ebcdb28e813344bc18a99f23dda51469c86d/enlarge=0;height=450;no_unsharpmask=1;quality=90;version=1;width=320/https%3A%2F%2Fcdn-ak-img.shonenjumpplus.com%2Fpublic%2Fepisode-thumbnail%2F10834108156763577305-d623fbac61688608d373ef753372924c%3F1689240612'
+st.image(image_url, use_column_width=True)
+st.caption('IndéModeはサロン開業を検討したい方に向けた物件検索・マーケティング分析アプリです')
 st.write('') 
 
 # 入力  
@@ -183,8 +187,7 @@ def get_area_info(line, station):
         st.warning("該当する駅情報が見つかりませんでした。")
         return None      
 
-
-# get_area_info関数の呼び出し
+# エリア調査（get_area_info）関数の呼び出し
 area_info = get_area_info(line, station)
 
 
@@ -350,12 +353,8 @@ def get_tenanto_info(line, station):
 
 
    
-# get_tenanto_info関数の呼び出し
+#物件検索（get_tenanto_info）関数の呼び出し
 tenanto_info = get_tenanto_info(line, station)
-
-
-
-
 
 if response.status_code == 200:
         
