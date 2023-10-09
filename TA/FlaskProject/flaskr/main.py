@@ -1,5 +1,5 @@
 from flaskr import app
-from flask import render_template, g, request, redirect
+from flask import render_template, g, request, redirect, jsonify
 import sqlite3
 from io import BytesIO
 from PIL import Image
@@ -7,6 +7,7 @@ import base64
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import json
 
 import folium
 from folium.plugins import HeatMap
@@ -127,14 +128,27 @@ def result():
 
 @app.route('/rent_info', methods=['GET', 'POST'])
 def rent_info():
-    # クライアントから送信されたカードのIDを取得
-    card_id = request.args.get("id")
+    # POSTリクエストからJSONデータを受け取る
+    card_info_json = request.form.get('card_info')
     
-    # カードの詳細情報を取得（適宜カスタマイズ）
-    selected_card = {"id": card_id, "title": "カード " + str(card_id), "description": "カードの説明文 " + str(card_id)}
+    # JSONデータをPythonの辞書に変換
+    card_info = json.loads(card_info_json)
     
-    # カード情報をHTMLテンプレートに渡す
-    return render_template('rent_info.html', card=selected_card)
+    # カード情報を取り出し
+    card_id = card_info.get('id')
+
+    db = get_db()
+
+    # Tena_StationIdがStation_Numと一致するテナントデータを取得し、DataFrameに読み込む
+    query = f"SELECT * FROM Tenant WHERE id={card_id}"
+    df_rent = pd.read_sql(query, db)
+    
+    # ここでカード情報を扱う処理を行う
+
+
+
+    # レンダリングするHTMLを指定して表示
+    return render_template('rent_info.html', df_rent=df_rent)
 
 
 

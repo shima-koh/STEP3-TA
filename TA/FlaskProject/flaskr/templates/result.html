@@ -28,7 +28,7 @@
 
     <div class="row justify-content-center">
         {% for index, row in df_rent.iterrows() %}
-            <div class="card border-black" style="max-width: 600px; margin: 10px;">
+            <div class="card border-black" style="max-width: 600px; margin: 10px;" data-card-id="{{ row['id'] }}">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img src="..." class="img-fluid rounded-start" alt="...">

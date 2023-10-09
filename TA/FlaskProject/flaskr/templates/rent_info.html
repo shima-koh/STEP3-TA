@@ -16,6 +16,49 @@
     </nav>
 </header>
 
+<div class="container-fluid">
+    <div id="carouselExampleIndicators" class="carousel slide mx-auto" style="width: 50%; padding: 20px;" >
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{df_rent['img'][0]}}" class="d-block mx-auto" alt="...">
+            </div>
+            <!-- 他の画像も同様に配置 -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <ul class="nav nav-underline justify-content-center" style="padding: 16px;">
+        <li class="nav-item" style="background-color: black;  border-radius: 100px; text-align: center; margin-right: 40px;">
+            <a class="nav-link active" style= "padding: 8px 16px; font-weight: 700; color: white;" aria-current="page" href="#">Info</a>
+        </li>
+        <li class="nav-item" style="background-color: lightgray;  border-radius: 100px; text-align: center; margin-right: 40px;">
+            <a class="nav-link active" style= "padding: 8px 16px; font-weight: 700; color: darkgray;" aria-current="page" href="#">Salon</a>
+        </li>
+        <li class="nav-item" style="background-color:lightgray;  border-radius: 100px; text-align: center; margin-right: 20px;">
+            <a class="nav-link active" style= "padding: 8px 16px; font-weight: 700; color:darkgray;" aria-current="page" href="#">Simu</a>
+        </li>
+    </ul>
+
+
+    <div class="container" style="border: 2px solid lightgray; border-radius: 50px;">
+        <div style="padding: 60px;">
+            <p> {{df_rent["tena_name"][0] }}</p>
+            <p> {{df_rent["tena_rent"][0] }}</p>
+            <p> {{df_rent["tena_area"][0] }}</p>
+        </div>
+
+    </div>
+    
+
+</div>
+
 
 
 {% endblock %}
