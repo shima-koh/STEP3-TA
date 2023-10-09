@@ -59,7 +59,7 @@ st.sidebar.write('下の写真は内装費用の坪単価10万円、30万円の�
 image3 = Image.open("image\内装イメージ.jpg")
 st.sidebar.image(image3)
 
-seat_count = st.sidebar.slider('Q1. ご開業されるサロンのカット席数を選択して下さい。', 1, 2, 4, 8)
+seat_count = st.sidebar.slider('Q1. ご開業されるサロンのカット席数を選択して下さい。', 1, 4, 8)
 
 interior_cost = st.sidebar.slider('Q2. ご開業されるサロンの想定坪単価(万円)を選択して下さい。', 0, 10, 30)
 
@@ -286,11 +286,15 @@ if st.sidebar.button("検索実行"):
                     elem5 = elem3.select("div")[2].text
                     elem6 = elem.select_one(".floor").text.replace("㎡","")
                     elem7 = elem.select(".add")[-1].text
-                    elem8 = elem3.select("div")[0].text
+                    elem8 = elem3.select("div")[0].text.replace(" ","")
                     if (elem.select_one('.smallText') != None):
                         elem9 = elem.select_one('.smallText').text.replace("万/坪","").replace("(","").replace(")","")
                     else:
                         elem9 = -1 # 値段が記入されていない場合があるので、わかりやすく-1にしておきましょう。
+                    if station_area in elem8:
+                        elem8 = elem8
+                    else:
+                        elem8 = station_area + elem8
                     # ハイフンでテキストを分割
                     split_text = elem8.split("-")
                     if len(split_text) > 1:
