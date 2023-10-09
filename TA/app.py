@@ -286,11 +286,15 @@ if st.button("検索実行"):
                     elem5 = elem3.select("div")[2].text
                     elem6 = elem.select_one(".floor").text.replace("㎡","")
                     elem7 = elem.select(".add")[-1].text
-                    elem8 = elem3.select("div")[0].text
+                    elem8 = elem3.select("div")[0].text.replace(" ","")
                     if (elem.select_one('.smallText') != None):
                         elem9 = elem.select_one('.smallText').text.replace("万/坪","").replace("(","").replace(")","")
                     else:
                         elem9 = -1 # 値段が記入されていない場合があるので、わかりやすく-1にしておきましょう。
+                    if station_area in elem8:
+                        elem8 = elem8
+                    else:
+                        elem8 = station_area + elem8
                     # ハイフンでテキストを分割
                     split_text = elem8.split("-")
                     if len(split_text) > 1:
