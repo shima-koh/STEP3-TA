@@ -40,69 +40,69 @@ station_list = df1['駅名']
 
 # 1. アプリタイトル
 st.title('IndéMode')
-
-image_url = 'https://cdn-scissors.gigaviewer.com/image/scale/5483ebcdb28e813344bc18a99f23dda51469c86d/enlarge=0;height=450;no_unsharpmask=1;quality=90;version=1;width=320/https%3A%2F%2Fcdn-ak-img.shonenjumpplus.com%2Fpublic%2Fepisode-thumbnail%2F10834108156763577305-d623fbac61688608d373ef753372924c%3F1689240612'
-st.image(image_url, use_column_width=True)
+image0 = Image.open("image\salon-img.jpg")
+st.image(image0, use_column_width=True)
 st.caption('IndéModeはサロン開業を検討したい方に向けた物件検索・マーケティング分析アプリです')
+st.caption('条件を選択することで、あなたに最適な物件をレコメンドします')
 st.write('') 
 
 # 2. 入力用コード  
-st.write('下のグラフは 美容室の1日の平均来客数です。')
+st.sidebar.write('下のグラフは 美容室の1日の平均来客数です。')
 image1 = Image.open("image\美容室の平均客数.png")
-st.image(image1)
+st.sidebar.image(image1)
 
-st.write('下のグラフは 席数vs店舗面積 の開業実績です。')
+st.sidebar.write('下のグラフは 席数vs店舗面積 の開業実績です。')
 image2 = Image.open("image\サロン開業実績_席数と店舗面積.png")
-st.image(image2)
+st.sidebar.image(image2)
 
-st.write('下の写真は内装費用の坪単価10万円、30万円のサロンイメージです。')
+st.sidebar.write('下の写真は内装費用の坪単価10万円、30万円のサロンイメージです。')
 image3 = Image.open("image\内装イメージ.jpg")
-st.image(image3)
+st.sidebar.image(image3)
 
-seat_count = st.slider('Q1. ご開業されるサロンのカット席数を選択して下さい。', 1, 2, 4, 8)
+seat_count = st.sidebar.slider('Q1. ご開業されるサロンのカット席数を選択して下さい。', 1, 2, 4, 8)
 
-interior_cost = st.slider('Q2. ご開業されるサロンの想定坪単価(万円)を選択して下さい。', 0, 10, 30)
+interior_cost = st.sidebar.slider('Q2. ご開業されるサロンの想定坪単価(万円)を選択して下さい。', 0, 10, 30)
 
-stylist_count = st.slider('Q3. ご開業されるサロンで雇用するスタイリストの人数を選択して下さい。', 1, 10, 1, 1)
+stylist_count = st.sidebar.slider('Q3. ご開業されるサロンで雇用するスタイリストの人数を選択して下さい。', 1, 10, 1, 1)
 
-turnover = st.slider('Q4. ご開業されるサロンのカット席回転数 ( = 営業時間(h/日) / お客様1人あたりの施術時間(h/人) ) を選択して下さい。', 1, 12, 6, 1)
+turnover = st.sidebar.slider('Q4. ご開業されるサロンのカット席回転数 ( = 営業時間(h/日) / お客様1人あたりの施術時間(h/人) ) を選択して下さい。', 1, 12, 6, 1)
 
-operationg_ratio = st.slider('Q5. ご開業されるサロン想定稼働率を選択して下さい。※数値表示です。60%の場合は0.6を選択。)', 0.0, 1.0, 0.6, 0.01)
+operationg_ratio = st.sidebar.slider('Q5. ご開業されるサロン想定稼働率を選択して下さい。※数値表示です。60%の場合は0.6を選択。)', 0.0, 1.0, 0.6, 0.01)
 
-st.write('下のグラフは スタイリストの年齢別給与です。')
+st.sidebar.write('下のグラフは スタイリストの年齢別給与です。')
 image4 = Image.open("image\スタイリストの年齢別年収.png")
-st.image(image4)
+st.sidebar.image(image4)
 
-stylist_salary = st.slider('Q6. 雇用されるスタイリストの平均給与(万円/月)を選択して下さい。※雇用しない場合は「0」を選択して下さい。', 0, 10, 50, 1)
+stylist_salary = st.sidebar.slider('Q6. 雇用されるスタイリストの平均給与(万円/月)を選択して下さい。※雇用しない場合は「0」を選択して下さい。', 0, 10, 50, 1)
 
-st.write('下のグラフは女性客が1回の来店で使う金額の平均額です。')
+st.sidebar.write('下のグラフは女性客が1回の来店で使う金額の平均額です。')
 image5 = Image.open("image\女性がサロンで使った金額.png")
-st.image(image5)
+st.sidebar.image(image5)
 
-st.write('下のグラフは男性客が1回の来店で使う金額の平均額です。')
+st.sidebar.write('下のグラフは男性客が1回の来店で使う金額の平均額です。')
 image6 = Image.open("image\男性がサロンで使った金額.png")
-st.image(image6)
+st.sidebar.image(image6)
 
-cut_price = st.slider('Q7. ご開業されるサロンのお客様の客単価見込み(円)を選択して下さい。', 0, 20000, 8000, 100)/10000
+cut_price = st.sidebar.slider('Q7. ご開業されるサロンのお客様の客単価見込み(円)を選択して下さい。', 0, 20000, 8000, 100)/10000
 
-st.write('') 
-st.write('下のグラフは 首都圏駅の利用者数ランキングです。')
+st.sidebar.write('') 
+st.sidebar.write('下のグラフは 首都圏駅の利用者数ランキングです。')
 image3 = Image.open("image\首都圏駅_利用者数ランキング.png")
-st.image(image3)
-station = st.selectbox('Q8. どの駅の近くでご開業予定か教えて下さい。', station_list)
-line = st.selectbox('Q9. その駅の路線を教えて下さい。', line_list)
+st.sidebar.image(image3)
+station = st.sidebar.selectbox('Q8. どの駅の近くでご開業予定か教えて下さい。', station_list)
+line = st.sidebar.selectbox('Q9. その駅の路線を教えて下さい。', line_list)
 
-st.write(f'まずは「 {line}{station} 駅」の周辺情報を調査します。')
-st.write('') 
+st.sidebar.write(f'まずは「 {line}{station} 駅」の周辺情報を調査します。')
+st.sidebar.write('') 
 
 # 仮の値を設定
 #line = "JR山手線"
 #station = "有楽町"
 
 # 検索ボタン
-if st.button("検索実行"):
+if st.sidebar.button("検索実行"):
     # 検索ボタンが押された場合の処理
-    st.write("検索を開始します。")
+    st.sidebar.write("検索を開始します。")
 
     # heartrails.express APIで緯度経度、郵便番号を取得
     url = "https://express.heartrails.com/api/json?method=getStations&line=" + line + "&name=" + station
@@ -286,15 +286,11 @@ if st.button("検索実行"):
                     elem5 = elem3.select("div")[2].text
                     elem6 = elem.select_one(".floor").text.replace("㎡","")
                     elem7 = elem.select(".add")[-1].text
-                    elem8 = elem3.select("div")[0].text.replace(" ","")
+                    elem8 = elem3.select("div")[0].text
                     if (elem.select_one('.smallText') != None):
                         elem9 = elem.select_one('.smallText').text.replace("万/坪","").replace("(","").replace(")","")
                     else:
                         elem9 = -1 # 値段が記入されていない場合があるので、わかりやすく-1にしておきましょう。
-                    if station_area in elem8:
-                        elem8 = elem8
-                    else:
-                        elem8 = station_area + elem8
                     # ハイフンでテキストを分割
                     split_text = elem8.split("-")
                     if len(split_text) > 1:
@@ -610,6 +606,9 @@ if st.button("検索実行"):
     else:
     # リクエストがエラーの場合の処理
         st.warning("路線名、駅名を再確認して下さい。")
+
+
+
 
 
 
