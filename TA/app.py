@@ -18,10 +18,10 @@ import folium #地図機能
 # DB読み込み
 conn = sqlite3.connect('STEP3チーム課題_TA_IndéMode_DB.db') # DB(SQLite)接続
 # SQLクエリ実行してデータフレーム化
-query1 = 'SELECT * FROM "首都圏の乗降客数ランキング";'  
+query1 = 'SELECT * FROM "東京23区駅一覧_JR,東京メトロ_首都圏利用者数best120";'  
 query2 = 'SELECT * FROM "東京23区賃料(募集金額)相場目安ランキングfrom飲食店ドットコム";'  
 query3 = 'SELECT * FROM "東京23区スクレイピングコード一覧";'  
-query4 = 'SELECT * FROM "東京23区路線一覧";' 
+query4 = 'SELECT * FROM "東京23区路線一覧_JRメトロ";' 
 query5 = 'SELECT * FROM "東京23区駅一覧_JR,東京メトロ";' 
 query10 = 'SELECT * FROM "サロン利用実態";'   
 df1 = pd.read_sql_query(query1, conn)
@@ -34,7 +34,7 @@ conn.close()  # データベース接続閉じる
 
 # リスト作成
 line_list = df4['路線名']
-station_list = df5['駅名']
+station_list = df1['駅名']
 
 #　ここからstreamlitに表示される部分
 
@@ -271,7 +271,7 @@ if st.button("検索実行"):
                     else:
                         elem1 = "-1"
                     if (elem.select_one('.price') != None):
-                        elem2 = elem.select_one('.price').text.replace("万","").replace("(税込)","").replace("(税別)","").replace(" ","").replace("\n","")# 値段をhs2に代入
+                        elem2 = elem.select_one('.price').text.replace("万","").replace("～","").replace("(税込)","").replace("(税別)","").replace(" ","").replace("\n","")# 値段をhs2に代入
                     else:
                         elem2 = -1 # 値段が記入されていない場合があるので、わかりやすく-1にしておきましょう。
                     elem3 = elem.select_one('.info')
@@ -372,6 +372,7 @@ if st.button("検索実行"):
         else:
             return None    
 
+    # 関数実行コード
     if response.status_code == 200:
         # エリア調査（get_area_info）関数の呼び出し
         area_info = get_area_info(line, station)
@@ -379,13 +380,13 @@ if st.button("検索実行"):
             # リクエストが成功した場合の処理
             st.write(f'■ ' + station + '駅 の情報')
             st.write(f'   ・首都圏利用者数ランキング:', area_info['利用者数ランク'][0], '位')
-            st.write(f'   ・利用者数:',area_info['利用者数'][0], '人/日')
+            st.write(f'   ・利用者数:',"{:,}".format(int(area_info['利用者数'][0])), '人/日')
             st.write('')
             st.write(f'■ ' + station + '駅所在エリア')
             st.write('   ・エリア:', area_info['エリア'])
-            st.write(f'   ・エリア賃料相場:', area_info['エリア賃料相場'], '円/坪')
+            st.write(f'   ・エリア賃料相場:', "{:,}".format(int(area_info['エリア賃料相場'])), '円/坪')
             st.write(f'   ・エリア内サロン件数 from 楽天Beauty:', area_info['エリア内サロン件数 from 楽天Beauty'], '件')
-            st.write(f'   ・エリア内カット単価平均額:',  area_info['エリア内カット単価平均額'], '円')
+            st.write(f'   ・エリア内カット単価平均額:',  round(area_info['エリア内カット単価平均額']), '円')
             fig, ax = plt.subplots(figsize=(10,6))
             sns.histplot(area_info['エリア内カット単価'], bins=20, kde=True, color='skyblue', ax=ax)  # kde=Trueでカーネル密度推定も表示
             ax.set_xlabel('カット単価(円)')
