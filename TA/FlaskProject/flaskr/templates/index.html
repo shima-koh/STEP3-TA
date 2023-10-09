@@ -6,7 +6,7 @@
 <header>
     <nav class="container-fluid d-flex w-100 h-100 p-3 mx-auto flex-column">
         <div class="container-fluid">
-            <img class="logo" src="/static/images/IndeMode_Logo.png" alt="logo" height="50">
+            <img class="logo" src="/static/images/IndeMode_Logo.png" alt="logo" height="40">
             <nav class="nav nav-masthead justify-content-center float-md-end">
                 <a class="nav-link active" aria-current="page" href="#" style="color: white;">Home</a>
                 <a class="nav-link"  style="color: white;" href="MyPage.html">MyPage</a>
@@ -76,28 +76,15 @@
     <!-- 検索ボックスを表示-->
     <div class="row justify-content-center">
         <!-- 路線検索-->
-        <form method="POST" action="/result" class="col-md-4"> <!-- POSTリクエストを送信するフォーム -->
+        <form method="POST" action="/result" class="col-md-4" onsubmit="return validateForm();"> <!-- POSTリクエストを送信するフォーム -->
             <div class="input-group ">
-                <select class="form-select" name="selected_option" aria-label="Example select with button addon">
+                <select class="form-select" name="selected_option" aria-label="Example select with button addon" id="selectOption">
                     <option selected>駅検索...</option>
                     {% for index, row in df_station.iterrows() %}
                     <option value="{{ row['stationId'] }}">{{ row['stationName'] }}</option>
                     {% endfor %}
                 </select>
-                <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->
-            </div>
-        </form>
-
-        <!-- 路線検索-->
-        <form method="POST" action="/map" class="col-md-4"> <!-- POSTリクエストを送信するフォーム -->
-            <div class="input-group">
-                <select class="form-select" name="selected_option" aria-label="Example select with button addon">
-                    <option selected>MAP検索...</option>
-                    <option value="1">有楽町</option>
-                    <option value="2">神田</option>
-                    <option value="3">東京駅</option>
-                </select>
-                <button class="btn btn-outline-secondary" type="submit">Search</button> <!-- フォームを送信するボタン -->
+                <button class="btn btn-outline-secondary" type="submit" id="submitButton">Search</button> <!-- フォームを送信するボタン -->
             </div>
         </form>
         

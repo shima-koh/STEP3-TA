@@ -11,6 +11,7 @@ import pandas as pd
 import folium
 from folium.plugins import HeatMap
 
+
 # テーブル作成
 #con.execute("CREATE TABLE Tenant(id INTEGER PRIMARY KEY, tena_name STRING, tena_stationId INTEGER)") #テナントDB
 #con.execute("CREATE TABLE User(id INTEGER PRIMARY KEY, user_name STRING, pw INTEGER)") #ユーザーDB
@@ -66,6 +67,8 @@ def index():
 
     return render_template('index.html', img=img, df=df,df_station=df_station)
 
+
+
 @app.route('/result', methods=['GET', 'POST'])
 def result():
 
@@ -83,32 +86,27 @@ def result():
             query = f"SELECT * FROM Tenant WHERE Tena_StationId={station_num}"
             df_rent = pd.read_sql(query, db)
 
-            query = f"SELECT * FROM Tenant WHERE Tena_StationId={station_num}"
+            query = f"SELECT * FROM Station WHERE stationId={station_num}"
             df_area = pd.read_sql(query, db)
 
-            cursor = db.cursor()
-            cursor.execute('SELECT stationName FROM Station WHERE stationId=?', station_num)
-            station_name = cursor.fetchone()
-            cursor.execute('SELECT lat FROM Station WHERE stationId=?', station_num)
-            station_lat = cursor.fetchone()
-            cursor.execute('SELECT lon FROM Station WHERE stationId=?', station_num)
-            station_lon = cursor.fetchone()
+            #Map情報の取得
+            station_name = df_area["stationName"][0]
+            station_lat = df_area["lat"][0]
+            station_lon = df_area["lon"][0]
 
-            # カーソルを閉じる
-            cursor.close()
 
-            map = folium.Map(location=[station_lat[0], station_lon[0]],zoom_start = 15,tiles='OpenStreetMap') 
+            map = folium.Map(location=[station_lat, station_lon],zoom_start = 15,tiles='OpenStreetMap') 
 
             #MapへのCircle表示
             en = folium.Circle(
-            location=[station_lat[0], station_lon[0]], # 中心
+            location=[station_lat, station_lon], # 中心
             radius=100, # 半径100m
             color='#ff0000', # 枠の色
             fill_color='#0000ff' # 塗りつぶしの色
             )
             en.add_to(map)
 
-            marker = folium.Marker([station_lat[0], station_lon[0]], popup=station_name[0])
+            marker = folium.Marker([station_lat, station_lon], popup=station_name)
             marker.add_to(map)
 
             if not df_rent.empty:
@@ -118,10 +116,31 @@ def result():
                 return 'No tenant data found for the selected station.'
         else:
             return f'StationNum for {station_num} not found'
-    # POSTメソッド以外なら、index.htmlに飛ばす
+    
+    # POSTメソッドカードセレクトとして飛ばす
     else:
-        return render_template('index.html')
+        return render_template("index.html")
 
+
+
+
+
+@app.route('/rent_info', methods=['GET', 'POST'])
+def rent_info():
+    # クライアントから送信されたカードのIDを取得
+    card_id = request.args.get("id")
+    
+    # カードの詳細情報を取得（適宜カスタマイズ）
+    selected_card = {"id": card_id, "title": "カード " + str(card_id), "description": "カードの説明文 " + str(card_id)}
+    
+    # カード情報をHTMLテンプレートに渡す
+    return render_template('rent_info.html', card=selected_card)
+
+
+
+
+
+"""
 @app.route('/map', methods=['GET', 'POST'])
 def map():
 
@@ -157,7 +176,7 @@ def map():
             marker = folium.Marker([station_lat[0], station_lon[0]], popup=station_name[0])
             marker.add_to(map)
             return map._repr_html_()
-
+"""
 
 if __name__ == '__main__':
     app.run(debug=True)
