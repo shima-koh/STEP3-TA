@@ -151,6 +151,41 @@ def rent_info():
     return render_template('rent_info.html', df_rent=df_rent)
 
 
+@app.route('/GeoInfo', methods=['GET', 'POST'])
+def GeoInfo():
+    # POSTリクエストから直接値を取得
+    card_id = request.form.get('card_info')
+    print(card_id)
+
+    db = get_db()
+
+    # Tena_StationIdがStation_Numと一致するテナントデータを取得し、DataFrameに読み込む
+    query = f"SELECT * FROM Tenant WHERE id={card_id}"
+    df_rent = pd.read_sql(query, db)
+    
+    # ここでカード情報を扱う処理を行う
+
+    # レンダリングするHTMLを指定して表示
+    return render_template('GeoInfo.html', df_rent=df_rent)  # GeoInfoページのHTMLテンプレート名を指定
+
+
+
+@app.route('/calc', methods=['GET', 'POST'])
+def calc():
+    # POSTリクエストから直接値を取得
+    card_id = request.form.get('card_info')
+    print(card_id)
+
+    db = get_db()
+
+    # Tena_StationIdがStation_Numと一致するテナントデータを取得し、DataFrameに読み込む
+    query = f"SELECT * FROM Tenant WHERE id={card_id}"
+    df_rent = pd.read_sql(query, db)
+    
+    # ここでカード情報を扱う処理を行う
+
+    # レンダリングするHTMLを指定して表示
+    return render_template('calc.html', df_rent=df_rent)  # GeoInfoページのHTMLテンプレート名を指定
 
 
 

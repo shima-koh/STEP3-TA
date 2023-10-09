@@ -51,3 +51,86 @@ cards.forEach(function(card, index) {
 });
 
 
+
+document.addEventListener("DOMContentLoaded", function() {
+    var geoInfoButton = document.getElementById("geoinfo-link");
+    
+    geoInfoButton.addEventListener("click", function() {
+        var parentElement = geoInfoButton.closest(".parent-element");
+        var tenaid = parentElement.dataset.tenaId;
+
+        console.log(tenaid);
+
+        // フォームを作成してカード情報を送信
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/GeoInfo";
+    
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "card_info";
+        input.value = tenaid; // JSON.stringifyを使用せずに直接値を代入
+        
+        form.appendChild(input);
+        document.body.appendChild(form);
+    
+        // フォームを送信
+        form.submit();
+    });
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var geoInfoButton = document.getElementById("calc-link");
+    
+    geoInfoButton.addEventListener("click", function() {
+        var parentElement = geoInfoButton.closest(".parent-element");
+        var tenaid = parentElement.dataset.tenaId;
+
+        console.log(tenaid);
+
+        // フォームを作成してカード情報を送信
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/calc";
+    
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "card_info";
+        input.value = tenaid; // JSON.stringifyを使用せずに直接値を代入
+        
+        form.appendChild(input);
+        document.body.appendChild(form);
+    
+        // フォームを送信
+        form.submit();
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    var geoInfoButton = document.getElementById("basicinfo-link");
+    
+    geoInfoButton.addEventListener("click", function() {
+        var parentElement = geoInfoButton.closest(".parent-element");
+        var tenaid = parentElement.dataset.tenaId;
+
+        console.log(tenaid);
+
+        // フォームを作成してカード情報を送信
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/rent_info";
+    
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "card_info";
+        input.value = tenaid; // JSON.stringifyを使用せずに直接値を代入
+        
+        form.appendChild(input);
+        document.body.appendChild(form);
+    
+        // フォームを送信
+        form.submit();
+    });
+});

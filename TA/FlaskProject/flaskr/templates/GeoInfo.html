@@ -34,14 +34,13 @@
         </button>
     </div>
 
-
     <div class="parent-element" data-tena-id="{{ df_rent['id'][0] }}">
         <ul class="nav nav-underline justify-content-center" style="padding: 16px;">
-            <li class="nav-item" style="background-color: black;  border-radius: 100px; text-align: center; margin-right: 40px;">
-                <a class="nav-link active" style= "padding: 8px 16px; font-weight: 700; color: white;" aria-current="page" href="#">BasicInfo</a>
-            </li>
             <li class="nav-item" style="background-color: lightgray;  border-radius: 100px; text-align: center; margin-right: 40px;">
-                <a class="nav-link active" style="padding: 8px 16px; font-weight: 700; color: darkgray;" aria-current="page" href="#" id="geoinfo-link">GeoInfo</a>
+                <a class="nav-link active" style= "padding: 8px 16px; font-weight: 700; color: darkgray;" aria-current="page" href="#" id="basicinfo-link">BasicInfo</a>
+            </li>
+            <li class="nav-item" style="background-color: black;  border-radius: 100px; text-align: center; margin-right: 40px;">
+                <a class="nav-link active" style= "padding: 8px 16px; font-weight: 700; color: white;" aria-current="page" href="#">GeoInfo</a>
             </li>
             <li class="nav-item" style="background-color:lightgray;  border-radius: 100px; text-align: center; margin-right: 20px;">
                 <a class="nav-link active" style= "padding: 8px 16px; font-weight: 700; color:darkgray;" aria-current="page" href="#" id="calc-link">Calc</a>
@@ -52,10 +51,8 @@
 
     <div class="container" style="border: 2px solid lightgray; border-radius: 50px;">
         <div style="padding: 60px;">
-            <h3> {{df_rent["tena_name"][0] }}</h3>
-            <p> {{df_rent["tena_adress"][0] }}</p>
-            <p> {{df_rent["tena_rent"][0] }}</p>
-            <p> {{df_rent["tena_area"][0] }}</p>
+            <h3> Geoinfo</h3>
+
         </div>
 
     </div>
