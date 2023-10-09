@@ -5,7 +5,7 @@
 <header>
     <nav class="container-fluid d-flex w-100 h-100 p-3 mx-auto flex-column">
         <div class="container-fluid">
-            <img class="logo" src="figure/Logo.png" alt="logo">
+            <img class="logo" src="/static/images/IndeMode_Logo.png" alt="logo" height="40">
             <nav class="nav nav-masthead justify-content-center float-md-end">
                 <a class="nav-link active" aria-current="page" href="#" style="color: white;">Home</a>
                 <a class="nav-link"  style="color: white;" href="MyPage.html">MyPage</a>
@@ -17,7 +17,7 @@
 
 <div class="container">
 
-    <p class="bodyText"><br>検索: {{ df_rent.shape[0] }}件</p>
+    <p class="bodyText"><br>検索対象: {{ df_area["stationName"][0] }}</p>
 
     <div class="row justify-content-center">
         <iframe class="map" srcdoc="{{ map_html }}" width="70%" height="300"></iframe>
