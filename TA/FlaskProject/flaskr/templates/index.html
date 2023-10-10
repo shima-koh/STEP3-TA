@@ -94,7 +94,7 @@
 
     <div class="row change-time05 fadeUp justify-content-center">
         {% for index, row in df.iterrows() %}
-            <div class="card border-black" style="max-width: 600px; margin: 10px;">
+            <div class="card border-black" style="max-width: 600px; margin: 10px;" data-card-id="{{ row['id'] }}">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img src="..." class="img-fluid rounded-start" style="max-width: 25%;" alt="...">
