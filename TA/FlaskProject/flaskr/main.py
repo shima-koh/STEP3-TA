@@ -128,27 +128,24 @@ def result():
 
 @app.route('/rent_info', methods=['GET', 'POST'])
 def rent_info():
-    # POSTリクエストからJSONデータを受け取る
-    card_info_json = request.form.get('card_info')
-    
-    # JSONデータをPythonの辞書に変換
-    card_info = json.loads(card_info_json)
-    
-    # カード情報を取り出し
-    card_id = card_info.get('id')
+
+    card_id = card_id = request.form.get('card_info')
+
+    # POSTリクエストから直接値を取得
+    card_id = request.form.get('card_info')
+    print(card_id)
 
     db = get_db()
 
     # Tena_StationIdがStation_Numと一致するテナントデータを取得し、DataFrameに読み込む
     query = f"SELECT * FROM Tenant WHERE id={card_id}"
     df_rent = pd.read_sql(query, db)
-    
+        
     # ここでカード情報を扱う処理を行う
 
-
-
     # レンダリングするHTMLを指定して表示
-    return render_template('rent_info.html', df_rent=df_rent)
+    return render_template('rent_info.html', df_rent=df_rent)  # GeoInfoページのHTMLテンプレート名を指定
+        
 
 
 @app.route('/GeoInfo', methods=['GET', 'POST'])
@@ -162,11 +159,40 @@ def GeoInfo():
     # Tena_StationIdがStation_Numと一致するテナントデータを取得し、DataFrameに読み込む
     query = f"SELECT * FROM Tenant WHERE id={card_id}"
     df_rent = pd.read_sql(query, db)
+
+    station_num = df_rent["tena_stationId"][0]
+    print(station_num)
+
+    query = f"SELECT * FROM Tenant WHERE Tena_StationId={station_num}"
+    df_rent = pd.read_sql(query, db)
+
+    query = f"SELECT * FROM Station WHERE stationId={station_num}"
+    df_area = pd.read_sql(query, db)
+
+            #Map情報の取得
+    station_name = df_area["stationName"][0]
+    station_lat = df_area["lat"][0]
+    station_lon = df_area["lon"][0]
+
+
+    map = folium.Map(location=[station_lat, station_lon],zoom_start = 15,tiles='OpenStreetMap') 
+
+    #MapへのCircle表示
+    en = folium.Circle(
+    location=[station_lat, station_lon], # 中心
+    radius=800, # 半径100m
+    color='#ff0000', # 枠の色
+    fill_color='#0000ff' # 塗りつぶしの色
+    )
+    en.add_to(map)
+
+    marker = folium.Marker([station_lat, station_lon], popup=station_name)
+    marker.add_to(map)
     
     # ここでカード情報を扱う処理を行う
 
     # レンダリングするHTMLを指定して表示
-    return render_template('GeoInfo.html', df_rent=df_rent)  # GeoInfoページのHTMLテンプレート名を指定
+    return render_template('GeoInfo.html', df_rent=df_rent,map_html=map._repr_html_())  # GeoInfoページのHTMLテンプレート名を指定
 
 
 

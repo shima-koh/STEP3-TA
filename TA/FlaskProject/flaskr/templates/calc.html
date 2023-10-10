@@ -17,22 +17,6 @@
 </header>
 
 <div class="container-fluid">
-    <div id="carouselExampleIndicators" class="carousel slide mx-auto" style="width: 50%; padding: 20px;" >
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{{df_rent['img'][0]}}" class="d-block mx-auto" alt="...">
-            </div>
-            <!-- 他の画像も同様に配置 -->
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
 
     <div class="parent-element" data-tena-id="{{ df_rent['id'][0] }}">
         <ul class="nav nav-underline justify-content-center" style="padding: 16px;">
@@ -51,10 +35,108 @@
 
     <div class="container" style="border: 2px solid lightgray; border-radius: 50px;">
         <div style="padding: 60px;">
-            <h3>calc display</h3>
 
+            <h3>Setting</h3>
+
+            <div class="row g-3 align-items-center" style="padding: 2px;">
+                <div class="col-3">
+                    <label for="assistantNum" class="col-form-label">初期投資額(万)</label>
+                </div>
+                <div class="col-auto">
+                    <input type="integer" id="assistantNum" class="form-control"  placeholder="200">
+                </div>
+            </div>
+
+            <div class="row g-3 align-items-center" style="padding: 2px;">
+                <div class="col-3">
+                    <label for="sheetNum" class="col-form-label">設置席数</label>
+                </div>
+                <div class="col-auto">
+                    <input type="integer" id="sheetNum" class="form-control"  placeholder="3">
+                </div>
+                <div class="col-auto">
+                    <span id="sheetNum" class="form-text">
+                    テナントXX坪。この広さの平均席数は〇です。
+                    </span>
+                </div>
+            </div>
+            <div class="row g-3 align-items-center" style="padding: 2px;">
+                <div class="col-3">
+                    <label for="assistantNum" class="col-form-label">雇用人数</label>
+                </div>
+                <div class="col-auto">
+                    <input type="integer" id="assistantNum" class="form-control"  placeholder="2">
+                </div>
+                <div class="col-auto">
+                    <span id="assistantNum" class="form-text">
+                    1人当たりの雇用費用は給料20万円に保険・税等を加算して月35万で計算します。
+                    </span>
+                </div>
+            </div>
+
+
+            <h3>calc</h3>
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="Cprice" class="col-form-label">単価</label>
+                </div>
+                <div class="col-2">
+                    <input type="integer" id="Cprice" class="form-control" placeholder="￥5,000">
+                </div>
+                <div class="col-auto">
+                    <p><br>×</p>
+                </div>
+                <div class="col-auto">
+                    <label for="time" class="col-form-label">時間(h)</label>
+                </div>
+                <div class="col-2">
+                    <input type="double" id="time" class="form-control" placeholder="1.5">
+                </div>
+            </div>
+
+            <div class="row g-3 align-items-center justify-content-end">
+                <div class="col-auto">
+                    <p>=</p>
+                </div>
+                <div class="col-auto">
+                    <label for="1dbenefit" class="col-form-label">売上(/日)</label>
+                </div>
+                <div class="col-3">
+                    <input type="integer" id="1dbenefit" class="form-control" placeholder="￥30,000">
+                </div>
+            </div>
+
+
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <p>光熱費：</p>
+                </div>
+                <div class="col-2">
+                    <input type="integer" id="Cprice" class="form-control" placeholder="￥5,000">
+                </div>
+                <div class="col-auto">
+                    <p><br>×</p>
+                </div>
+                <div class="col-auto">
+                    <label for="time" class="col-form-label">時間(h)</label>
+                </div>
+                <div class="col-2">
+                    <input type="double" id="time" class="form-control" placeholder="1.5">
+                </div>
+            </div>
+
+            <div class="row g-3 align-items-center justify-content-end">
+                <div class="col-auto">
+                    <p>=</p>
+                </div>
+                <div class="col-auto">
+                    <label for="1dbenefit" class="col-form-label">売上(/日)</label>
+                </div>
+                <div class="col-3">
+                    <input type="integer" id="1dbenefit" class="form-control" placeholder="￥30,000">
+                </div>
+            </div>
         </div>
-
     </div>
     
 
