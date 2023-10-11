@@ -18,7 +18,7 @@ import folium #地図機能
 # DB読み込み
 conn = sqlite3.connect('STEP3チーム課題_TA_IndéMode_DB.db') # DB(SQLite)接続
 # SQLクエリ実行してデータフレーム化
-query1 = 'SELECT * FROM "東京23区駅一覧_JR東京メトロ_首都圏利用者数best120";'  
+query1 = 'SELECT * FROM "都内利用者数上位駅";'  
 query2 = 'SELECT * FROM "東京23区賃料(募集金額)相場目安ランキングfrom飲食店ドットコム";'  
 query3 = 'SELECT * FROM "東京23区スクレイピングコード一覧";'  
 query4 = 'SELECT * FROM "東京23区路線一覧_JRメトロ";' 
