@@ -18,11 +18,11 @@ import folium #地図機能
 # DB読み込み
 conn = sqlite3.connect('STEP3チーム課題_TA_IndéMode_DB.db') # DB(SQLite)接続
 # SQLクエリ実行してデータフレーム化
-query1 = 'SELECT * FROM "東京23区駅一覧_JR,東京メトロ_首都圏利用者数best120";'  
+query1 = 'SELECT * FROM "東京23区駅一覧_JR東京メトロ_首都圏利用者数best120";'  
 query2 = 'SELECT * FROM "東京23区賃料(募集金額)相場目安ランキングfrom飲食店ドットコム";'  
 query3 = 'SELECT * FROM "東京23区スクレイピングコード一覧";'  
 query4 = 'SELECT * FROM "東京23区路線一覧_JRメトロ";' 
-query5 = 'SELECT * FROM "東京23区駅一覧_JR,東京メトロ";' 
+query5 = 'SELECT * FROM "東京23区駅一覧_JR東京メトロ";' 
 query10 = 'SELECT * FROM "サロン利用実態";'   
 df1 = pd.read_sql_query(query1, conn)
 df2 = pd.read_sql_query(query2, conn)
@@ -36,7 +36,7 @@ conn.close()  # データベース接続閉じる
 line_list = df4['路線名']
 station_list = df1['駅名']
 
-#　ここからstreamlitに表示される部分
+# ここからstreamlitに表示される部分
 
 # 1. アプリタイトル
 st.title('IndéMode')
@@ -398,7 +398,7 @@ if st.sidebar.button("検索実行"):
             ax.set_title(f"{area_info['エリア']} サロンのカット単価ヒストグラム")
             st.pyplot(fig)  # Streamlitでのグラフ表示
 
-        #物件検索（get_tenanto_info）関数の呼び出し
+        # 物件検索（get_tenanto_info）関数の呼び出し
         tenanto_info = get_tenanto_info(line, station)
         if tenanto_info is not None:
             # リクエストが成功した場合の処理
