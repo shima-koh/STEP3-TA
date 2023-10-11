@@ -42,7 +42,7 @@ station_list = df1['駅名']
 st.title('IndéMode')
 image0 = Image.open("image\salon-img.jpg")
 st.image(image0, use_column_width=True)
-st.caption('IndéModeはサロン開業を検討したい方に向けた物件検索・マーケティング分析アプリです')
+st.subheader('自分のサロンを開こうとおもったら')
 st.caption('条件を選択することで、あなたに最適な物件をレコメンドします')
 st.write('') 
 

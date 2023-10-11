@@ -16,23 +16,7 @@
     </nav>
 </header>
 
-<div class="container-fluid">
-    <div id="carouselExampleIndicators" class="carousel slide mx-auto" style="width: 50%; padding: 20px;" >
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{{df_rent['img'][0]}}" class="d-block mx-auto" alt="...">
-            </div>
-            <!-- 他の画像も同様に配置 -->
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
+<div class="container">
 
     <div class="parent-element" data-tena-id="{{ df_rent['id'][0] }}">
         <ul class="nav nav-underline justify-content-center" style="padding: 16px;">
@@ -48,10 +32,17 @@
         </ul>
     </div>
 
+    <div class="row justify-content-center" style="padding: 20px;">
+        <iframe class="map" srcdoc="{{ map_html }}" width="70%" height="300"></iframe>
+    </div>
 
     <div class="container" style="border: 2px solid lightgray; border-radius: 50px;">
         <div style="padding: 60px;">
             <h3> Geoinfo</h3>
+            <p> この周辺にあるサロンの数はXX店舗です</p>
+            <p>この周辺のサロンの平均カット額はXXX円です。</p>
+            <p>この周辺の集客規模はXXXです</p>
+            <p>全体的には集客がし易そうですが、競合店が多いので他店との差別化が必要そうです</p>
 
         </div>
 
