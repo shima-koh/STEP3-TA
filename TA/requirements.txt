@@ -1,0 +1,12 @@
+streamlit
+sqlite3
+requests
+pandas
+beautifulsoup4
+matplotlib
+japanize_matplotlib
+seaborn
+Pillow
+geopy
+regex
+folium
