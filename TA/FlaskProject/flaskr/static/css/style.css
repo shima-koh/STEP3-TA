@@ -1,3 +1,40 @@
+:root {
+    /* main colors */
+    --color-primary: #6b3d1f;
+    --color-primary-light: color-mod(var(--color-primary) tint(15%));
+    --color-primary-dark: color-mod(var(--color-primary) shade(15%));
+    --color-primary-bg: color-mod(var(--color-primary) alpha(20%));
+
+    --color-accent: #860000;
+    --color-accent-light: color-mod(var(--color-accent) tint(15%));
+    --color-accent-dark: color-mod(var(--color-accent) shade(10%));
+    --color-accent-bg: color-mod(var(--color-accent) alpha(20%));
+
+    /* shades - generated using chroma.js - 12 steps*/
+    --black: #1d1d21;
+    --gray-10: #2e2e31;
+    --gray-6: #7b7a7d;
+    --gray-4: #a5a5a6;
+    --gray-3: #bbbbbc;
+    --gray-2: #d1d0d2;
+    --gray-1: #e8e7e8;
+    --white: white;
+
+    /* background color*/
+    --color-background: #1d1d21;
+    --color-background-dark: #2e2e31;
+
+    /* feedback */
+    --color-success: #88c459;
+    --color-error: #f5414f;
+    --color-warning: #ffd137;
+}
+
+
+header {
+    background-color: rgb(51, 51, 51); /* Header color set*/
+}
+
 
 form {
     padding: 10px; /* フォームの内側の余白を設定 */
@@ -8,9 +45,6 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* X、Y、ぼかしの半径、色を設定 */
 }
 
-header {
-    background-color: rgb(51, 51, 51); /* Header color set*/
-}
 
 /* 画像部分の下にグラデーションを追加するスタイル */
 .carousel-item::after {
@@ -140,3 +174,14 @@ header {
         background:#333;/*ドットボタンの現在地表示の色*/
     }
 
+
+    
+/*icon hover/focus design */
+.nav-link:hover{
+    background-color: #ffffff67;
+    border-radius: 4px;
+}
+.nav-link:focus{
+    background-color: #ffffffcc;
+    border-radius: 4px;
+}
