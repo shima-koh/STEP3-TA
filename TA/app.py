@@ -283,6 +283,10 @@ if st.sidebar.button("検索実行"):
                     #    elem43 =elem40[2]
                     #else:
                     #      elem43 = -1
+                    if len(elem3.select("div")) >= 3:
+                        elem5 = elem3.select("div")[2].text
+                    else:
+                        elem5 = elem3.select("div")[1].text 
                     elem5 = elem3.select("div")[2].text
                     elem6 = elem.select_one(".floor").text.replace("㎡","")
                     elem7 = elem.select(".add")[-1].text
