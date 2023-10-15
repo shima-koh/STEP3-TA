@@ -42,77 +42,196 @@
     <div class="container" style="border: 2px solid lightgray; border-radius: 50px;">
         <div style="padding: 60px;">
 
-            <h3>Setting</h3>
-
-            <div class="row g-3 align-items-center" style="padding: 2px;">
-                <div class="col-3">
-                    <label for="assistantNum" class="col-form-label">初期投資額(万)</label>
+            <h3>Setting<br></h3>
+            <!---------------------------  form-------------------------------------->
+            <form class="row g-3 needs-validation" novalidate>
+                
+                <!----------------初期投資可能額--------------->
+                <div class="row">
+                    <div class="col-3" style="margin-top: 5px;">
+                        <label for="initial_investment" class="form-label">初期投資額</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="initial_investment" placeholder="200" onblur="validateInput(this)" aria-describedby="basic-addon2">
+                            <span class="input-group-text" id="basic-addon2">万円</span>
+                            <div class="error-message" style="display: none;">整数を入力してください。</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <input type="integer" id="assistantNum" class="form-control"  placeholder="200">
-                </div>
-            </div>
-
-            <div class="row g-3 align-items-center" style="padding: 2px;">
-                <div class="col-3">
-                    <label for="sheetNum" class="col-form-label">設置席数</label>
-                </div>
-                <div class="col-auto">
-                    <input type="integer" id="sheetNum" class="form-control"  placeholder="3">
-                </div>
-                <div class="col-auto">
-                    <span id="sheetNum" class="form-text">
-                    テナントXX坪。この広さの平均席数は〇です。
-                    </span>
-                </div>
-            </div>
-            <div class="row g-3 align-items-center" style="padding: 2px;">
-                <div class="col-3">
-                    <label for="assistantNum" class="col-form-label">雇用人数</label>
-                </div>
-                <div class="col-auto">
-                    <input type="integer" id="assistantNum" class="form-control"  placeholder="2">
-                </div>
-                <div class="col-auto">
-                    <span id="assistantNum" class="form-text">
-                    1人当たりの雇用費用は給料20万円に保険・税等を加算して月35万で計算します。
-                    </span>
-                </div>
-            </div>
 
 
+                <!----------------雇用人数-------------->
+                <div class="row" style="padding-top: 16px;">
+                    <div class="col-3" style="margin-top: 5px;">
+                        <label for="hire" class="form-label">雇用人数</label>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="hire" placeholder="200" onblur="validateInput(this)" aria-describedby="basic-addon2">
+                            <span class="input-group-text" id="basic-addon2">人</span>
+                            <div class="error-message" style="display: none;">整数を入力してください。</div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <span id="assistantNum" class="form-text">
+                        1人当たりの雇用費用は給料20万円に保険・税等を加算して月35万で計算します。
+                        </span>
+                    </div>
+                </div>              
+
+                
+                <div class="row g-3 align-items-center">
+                    <h3>売上<br></h3>
+
+                    <!---------------------顧客接客可能人数の計算--------------------->
+                    <div class="col-auto" style="margin-top: 16px;">
+                        <label for="servicenum" class="form-label">■1日の接客可能人数（営業時間×60分÷接客平均時間）</label>
+                    </div>
+                    <div class="row" style="padding-top: 8px;">
+    
+                        <div class="col-2">
+                            <div class="input-group  ">
+                                <input type="integer" id="bussiness_hour" class="form-control" placeholder="10" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">時間</span>
+                            </div>
+                        </div>
+    
+                        <div class="col-auto"><p><br>×</p></div>
+    
+                        <div class="col-2">
+                            <div class="input-group">
+                                <input type="integer" id="bussiness_minute" class="form-control" placeholder="60" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">分</span>
+                            </div>
+                        </div>
+    
+                        <div class="col-auto"><p><br>÷</p></div>
+    
+                        <div class="col-2">
+                            <div class="input-group">
+                                <input type="integer" id="ave_time" class="form-control" placeholder="80" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">分</span>
+                            </div>
+                        </div>
+        
+                        <div class="col-auto"><p><br>=</p></div>
+        
+                        <div class="col-3">
+                            <div class="input-group">
+                                <input type="integer" id="max_turnover" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">人</span>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+    
+                    <!---------------------店舗接客人数の計算--------------------->
+                    <div class="col-auto" style="margin-top: 16px;">
+                        <label for="servicenum" class="form-label">■店舗接客人数（席数×接客可能人数×座席稼働率）</label>
+                    </div>
+                    <div class="row" style="padding-top: 8px;">
+    
+                        <div class="col-2">
+                            <div class="input-group  ">
+                                <input type="integer" id="chair" class="form-control" placeholder="2" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">席</span>
+                            </div>
+                        </div>
+    
+                        <div class="col-auto"><p><br>×</p></div>
+    
+                        <div class="col-2">
+                            <div class="input-group">
+                                <input type="integer" id="turover" class="form-control" placeholder="8" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">人</span>
+                            </div>
+                        </div>
+    
+                        <div class="col-auto"><p><br>×</p></div>
+    
+                        <div class="col-2">
+                            <div class="input-group">
+                                <input type="integer" id="booking_rate" class="form-control" placeholder="80" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">%</span>
+                            </div>
+                        </div>
+        
+                        <div class="col-auto"><p><br>=</p></div>
+        
+                        <div class="col-3">
+                            <div class="input-group">
+                                <input type="integer" id="servicenum" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">人</span>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                    <!---------------------店舗の月売上の計算--------------------->
+                    <div class="col-auto" style="margin-top: 16px;">
+                        <label for="servicenum" class="form-label">■店舗の月売上（1日の店舗接客人数×平均客単価×月の営業日数）</label>
+                    </div>
+                    <div class="row" style="padding-top: 8px;">
+    
+                        <div class="col-2">
+                            <div class="input-group  ">
+                                <input type="integer" id="customer_num" class="form-control" placeholder="2" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">人</span>
+                            </div>
+                        </div>
+    
+                        <div class="col-auto"><p><br>×</p></div>
+    
+                        <div class="col-2">
+                            <div class="input-group">
+                                <input type="integer" id="customer_price" class="form-control" placeholder="8" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">円</span>
+                            </div>
+                        </div>
+    
+                        <div class="col-auto"><p><br>×</p></div>
+    
+                        <div class="col-2">
+                            <div class="input-group">
+                                <input type="integer" id="days" class="form-control" placeholder="80" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">日</span>
+                            </div>
+                        </div>
+        
+                        <div class="col-auto"><p><br>=</p></div>
+        
+                        <div class="col-3">
+                            <div class="input-group">
+                                <input type="integer" id="benefit" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <span class="input-group-text" id="basic-addon2">円</span>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+    
+
+                <!------------------calc button--------------------->
+                <div class="col-12" style="padding-top: 24px;">
+                    <button class="btn" type="submit" style="background-color: black; color: white; border-radius: 100px; ">再計算</button>
+                </div>
+            </form>
+                
+            <!--<div class="row g-3 align-items-center" style="padding: 2px;">-->
+
+             
+            
             <h3>calc</h3>
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                    <label for="Cprice" class="col-form-label">単価</label>
-                </div>
-                <div class="col-2">
-                    <input type="integer" id="Cprice" class="form-control" placeholder="￥5,000">
-                </div>
-                <div class="col-auto">
-                    <p><br>×</p>
-                </div>
-                <div class="col-auto">
-                    <label for="time" class="col-form-label">時間(h)</label>
-                </div>
-                <div class="col-2">
-                    <input type="double" id="time" class="form-control" placeholder="1.5">
-                </div>
-            </div>
-
-            <div class="row g-3 align-items-center justify-content-end">
-                <div class="col-auto">
-                    <p>=</p>
-                </div>
-                <div class="col-auto">
-                    <label for="1dbenefit" class="col-form-label">売上(/日)</label>
-                </div>
-                <div class="col-3">
-                    <input type="integer" id="1dbenefit" class="form-control" placeholder="￥30,000">
-                </div>
-            </div>
+            
+            
+            
 
 
+
+
+           ---------       cost calc         -------------
             <div class="row g-3 align-items-center">
                 <div class="col-auto">
                     <p>光熱費：</p>
@@ -143,9 +262,58 @@
                 </div>
             </div>
 
-            <div class="col-auto">
-                <button type="submit" class="btn mb-3" style="background-color: black; color: white; border-radius: 100px; ">再計算</button>
-            </div>
+            
+ 
+
+                
+                <div class="col-md-4">
+                  <label for="validationCustom02" class="form-label">Last name</label>
+                  <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="validationCustomUsername" class="form-label">Username</label>
+                    <div class="input-group has-validation">
+                        <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="basic-addon2" required>
+                        <span class="input-group-text" id="basic-addon2">円</span>
+                        <div class="invalid-feedback">
+                        Please choose a username.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="validationCustom03" class="form-label">City</label>
+                  <input type="text" class="form-control" id="validationCustom03" required>
+                  <div class="invalid-feedback">
+                    Please provide a valid city.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="validationCustom04" class="form-label">State</label>
+                  <select class="form-select" id="validationCustom04" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option>...</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select a valid state.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="validationCustom05" class="form-label">Zip</label>
+                  <input type="text" class="form-control" id="validationCustom05" required>
+                  <div class="invalid-feedback">
+                    Please provide a valid zip.
+                  </div>
+                </div>
+                
+
+
+            
+
+
+            <!--------------------    Display      ---------------------------->
 
             <div class="col-auto" style="padding: 20px;">
                 <p>収支予測:<span style="font-size: 50px; font-weight: 700;"> 月の利益：XX円</span>（収支予測の折れ線グラフとかも一緒に出す？）</p>
@@ -156,6 +324,11 @@
             </div>
 
         </div>
+
+
+
+
+        
     </div>
     
 

@@ -132,3 +132,19 @@ homebutton.addEventListener("click", function() {
 });
 
 
+function validateInput(inputElement) {
+    var inputValue = inputElement.value;
+
+    // 正規表現を使用して整数かどうかを検証
+    var isInteger = /^\d+$/.test(inputValue);
+
+    // エラーメッセージを持つ要素
+    var errorMessageElement = inputElement.parentElement.querySelector('.error-message');
+
+    if (!isInteger) {
+        errorMessageElement.style.display = 'block';
+        inputElement.value = ""; // 不正な入力をクリア
+    } else {
+        errorMessageElement.style.display = 'none';
+    }
+}
