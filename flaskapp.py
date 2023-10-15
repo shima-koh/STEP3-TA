@@ -1,4 +1,4 @@
-from FlaskProject.Flaskr.Main import app
+from FlaskProject.flaskr.main import app
 
 if __name__ == "__main__":
     app.run()
