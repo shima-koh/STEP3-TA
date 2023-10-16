@@ -198,6 +198,7 @@ def GeoInfo():
 
 @app.route('/calc', methods=['GET', 'POST'])
 def calc():
+
     # POSTリクエストから直接値を取得
     card_id = request.form.get('card_info')
     print(card_id)
