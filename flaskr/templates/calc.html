@@ -54,7 +54,7 @@
                     </div>
                     <div class="col-auto">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="initial_investment" placeholder="200" onblur="validateInput(this)" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control" id="initial_investment" placeholder="{{ df_calc['initial_investment'] }}" onblur="validateInput(this)" aria-describedby="basic-addon2">
                             <span class="input-group-text" id="basic-addon2">万円</span>
                             <div class="error-message" style="display: none;">整数を入力してください。</div>
                         </div>
@@ -73,7 +73,7 @@
     
                         <div class="col-2">
                             <div class="input-group  ">
-                                <input type="integer" id="bussiness_hour" class="form-control" placeholder="10" aria-describedby="basic-addon2">
+                                <input type="integer" id="bussiness_hour" class="form-control" placeholder="{{ df_calc['bussiness_hour'] }}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">時間</span>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="bussiness_minute" class="form-control" placeholder="60" aria-describedby="basic-addon2">
+                                <input type="integer" id="bussiness_minute" class="form-control" placeholder="{{ df_calc['bussiness_minutes']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">分</span>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="ave_time" class="form-control" placeholder="80" aria-describedby="basic-addon2">
+                                <input type="integer" id="ave_time" class="form-control" placeholder="{{ df_calc['ave_time']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">分</span>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
         
                         <div class="col-3">
                             <div class="input-group">
-                                <input type="integer" id="max_turnover" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <input type="integer" id="max_turnover" class="form-control" placeholder="{{ df_calc['max_turnover']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">人</span>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
     
                         <div class="col-2">
                             <div class="input-group  ">
-                                <input type="integer" id="chair" class="form-control" placeholder="2" aria-describedby="basic-addon2">
+                                <input type="integer" id="chair" class="form-control" placeholder="{{ df_calc['chair']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">席</span>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="turover" class="form-control" placeholder="8" aria-describedby="basic-addon2">
+                                <input type="integer" id="turover" class="form-control" placeholder="{{ df_calc['max_turnover']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">人</span>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="booking_rate" class="form-control" placeholder="80" aria-describedby="basic-addon2">
+                                <input type="integer" id="booking_rate" class="form-control" placeholder="{{ df_calc['booking_rate']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">%</span>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
         
                         <div class="col-3">
                             <div class="input-group">
-                                <input type="integer" id="servicenum" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <input type="integer" id="servicenum" class="form-control" placeholder="{{ df_calc['servicenum']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">人</span>
                             </div>
                         </div>
@@ -158,7 +158,7 @@
     
                         <div class="col-2">
                             <div class="input-group  ">
-                                <input type="integer" id="customer_num" class="form-control" placeholder="2" aria-describedby="basic-addon2">
+                                <input type="integer" id="customer_num" class="form-control" placeholder="{{ df_calc['servicenum']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">人</span>
                             </div>
                         </div>
@@ -167,7 +167,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="customer_price" class="form-control" placeholder="8" aria-describedby="basic-addon2">
+                                <input type="integer" id="customer_price" class="form-control" placeholder="{{ df_calc['customer_price']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="days" class="form-control" placeholder="80" aria-describedby="basic-addon2">
+                                <input type="integer" id="days" class="form-control" placeholder="{{ df_calc['days']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">日</span>
                             </div>
                         </div>
@@ -185,7 +185,7 @@
         
                         <div class="col-3">
                             <div class="input-group">
-                                <input type="integer" id="benefit" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <input type="integer" id="benefit" class="form-control" placeholder="{{ df_calc['benefit']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -206,7 +206,7 @@
     
                         <div class="col-2">
                             <div class="input-group  ">
-                                <input type="integer" id="movingin_cost" class="form-control" placeholder="10" aria-describedby="basic-addon2">
+                                <input type="integer" id="movingin_cost" class="form-control" placeholder="{{ df_calc['movingin_cost']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -215,7 +215,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="moving_cost" class="form-control" placeholder="60" aria-describedby="basic-addon2">
+                                <input type="integer" id="moving_cost" class="form-control" placeholder="{{ df_calc['moving_cost']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -224,7 +224,7 @@
         
                         <div class="col-3">
                             <div class="input-group">
-                                <input type="integer" id="initial_cost" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <input type="integer" id="initial_cost" class="form-control" placeholder="{{ df_calc['initial_cost']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
     
                         <div class="col-2">
                             <div class="input-group  ">
-                                <input type="integer" id="rent_cost" class="form-control" placeholder="10" aria-describedby="basic-addon2">
+                                <input type="integer" id="rent_cost" class="form-control" placeholder="{{ df_calc['rent_cost']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -253,7 +253,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="hire_cost" class="form-control" placeholder="60" aria-describedby="basic-addon2">
+                                <input type="integer" id="hire_cost" class="form-control" placeholder="{{ df_calc['hire_cost']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">人</span>
                             </div>
                         </div>
@@ -262,7 +262,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="utility_cost" class="form-control" placeholder="80" aria-describedby="basic-addon2">
+                                <input type="integer" id="utility_cost" class="form-control" placeholder="{{ df_calc['utility_cost']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -271,7 +271,7 @@
         
                         <div class="col-3">
                             <div class="input-group">
-                                <input type="integer" id="fixed_cost" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <input type="integer" id="fixed_cost" class="form-control" placeholder="{{ df_calc['fixed_cost']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -286,7 +286,7 @@
     
                         <div class="col-2">
                             <div class="input-group  ">
-                                <input type="integer" id="material_cost" class="form-control" placeholder="10" aria-describedby="basic-addon2">
+                                <input type="integer" id="material_cost" class="form-control" placeholder="{{ df_calc['material_cost']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">％</span>
                             </div>
                         </div>
@@ -295,7 +295,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="ad_cost" class="form-control" placeholder="60" aria-describedby="basic-addon2">
+                                <input type="integer" id="ad_cost" class="form-control" placeholder="{{ df_calc['ad_cost']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -304,7 +304,7 @@
         
                         <div class="col-3">
                             <div class="input-group">
-                                <input type="integer" id="variable_cost" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <input type="integer" id="variable_cost" class="form-control" placeholder="{{ df_calc['variable_cost']}}" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -324,8 +324,9 @@
             <!--------------------    Display      ---------------------------->
 
             <div class="col-auto" style="padding: 20px;">
-                <p>収支予測:<span id="resultContainer" style="font-size: 50px; font-weight: 700;"> 月の利益：{{ final_benefit }}</span>（収支予測の折れ線グラフとかも一緒に出す？）</p>
+                <p>収支予測:<span style="font-size: 30px; font-weight: 700;"> 月の利益：{{ df_calc['final_benefit'] }}</span></p>
             </div>
+            <p>{{ df_calc['initial_check'] }}</p>
             
             <div class="col-auto" style="padding: 20px;">
                 <p>Score:<span style="font-size: 50px; font-weight: 700;"> 75/100 </span></p>

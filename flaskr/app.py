@@ -267,7 +267,7 @@ def calc():
         rent_cost = request.form.get('rent_cost')
     
     if request.form.get('hire_cost') is None:
-        hire_cost = 500000
+        hire_cost = 3
     else:
         hire_cost = request.form.get('hire_cost')
 
@@ -286,11 +286,14 @@ def calc():
     else:
         ad_cost = request.form.get('ad_cost')
 
-    max_turnover = bussiness_hour * 60 / ave_time
+    bussiness_minutes = 60
+
+    max_turnover = bussiness_hour * bussiness_minutes / ave_time
     servicenum = chair * max_turnover * booking_rate
     benefit = servicenum * customer_price * days
 
     initial_cost =  movingin_cost + moving_cost
+
     if ( (initialInvestment - initial_cost) >= 0 ):
         initial_check =  "Clear"
     else:
@@ -301,15 +304,33 @@ def calc():
     variable_cost = ( benefit * material_cost) + ad_cost
 
     final_benefit = benefit - fixed_cost - variable_cost
+    print("Final:--------------------"+final_benefit)
 
-    ave_time = 200
     #計算のデータをディクショナリにまとめる
     result_data = {
         'initialInvestment': initialInvestment,
         'bussiness_hour': bussiness_hour,
+        'bussiness_minutes': bussiness_minutes,
         'ave_time':ave_time,
-        # 他のデータも同様に追加
-        'final_benefit': final_benefit  # ここに最終結果を追加
+        'max_turnover': max_turnover,
+        'servicenum':servicenum,
+        'chair':chair,
+        'booking_rate':booking_rate,
+        'benefit':benefit,
+        'customer_price':customer_price,
+        'days':days,
+        'initial_cost':initial_cost,
+        'movingin_cost':movingin_cost,
+        'moving_cost':moving_cost,
+        'initial_check':initial_check,
+        'fixed_cost':fixed_cost,
+        'rent_cost':rent_cost,
+        'hire_cost':hire_cost,
+        'utility_cost':utility_cost,
+        'variable_cost':variable_cost,
+        'material_cost':material_cost,
+        'ad_cost':ad_cost,
+        'final_benefit': final_benefit,  # ここに最終結果を追加
     }
 
     # レンダリングするHTMLを指定して表示
