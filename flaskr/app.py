@@ -202,18 +202,118 @@ def calc():
     # POSTリクエストから直接値を取得
     card_id = request.form.get('card_info')
     print(card_id)
+    if card_id is None:
+        card_id = request.form.get('card_id')
 
     db = get_db()
 
     # Tena_StationIdがStation_Numと一致するテナントデータを取得し、DataFrameに読み込む
     query = f"SELECT * FROM Tenant WHERE id={card_id}"
     df_rent = pd.read_sql(query, db)
+
+    if request.form.get('initialInvestment') is None:
+        initialInvestment = 200
+    else:
+        initialInvestment = request.form.get('initialInvestment')
     
-    # ここでカード情報を扱う処理を行う
+    if request.form.get('bussiness_hour') is None:
+        bussiness_hour = 10
+    else:
+        bussiness_hour = request.form.get('bussiness_hour')
+    
+    if request.form.get('ave_time') is None:
+        ave_time = 90
+    else:
+        ave_time = request.form.get('ave_time')
+        
+    if request.form.get('chair') is None:
+        chair = 2
+    else:
+        chair = request.form.get('chair')
+    
+    if request.form.get('booking_rate') is None:
+        booking_rate = .6
+    else:    
+        booking_rate = request.form.get('booking_rate')
+
+    if  request.form.get('days') is None:
+        days = 25
+    else:
+        days = request.form.get('days')
+
+    if request.form.get('customer_price') is None:
+        customer_price = 5000
+    else:
+        customer_price = request.form.get('customer_price')
+    
+    if request.form.get(' movingin_cost') is None:
+        movingin_cost = 6
+    else:
+        movingin_cost = request.form.get(' movingin_cost')
+    
+    if request.form.get('moving_cost') is None:
+        moving_cost = 500000
+    else:
+        moving_cost = request.form.get('moving_cost')
+    
+    if request.form.get('initial_cost') is None:
+        initial_cost = 0
+    else:
+        initial_cost = request.form.get('initial_cost')
+    
+    if request.form.get('rent_cost') is None:
+        rent_cost = 15
+    else:
+        rent_cost = request.form.get('rent_cost')
+    
+    if request.form.get('hire_cost') is None:
+        hire_cost = 500000
+    else:
+        hire_cost = request.form.get('hire_cost')
+
+    if request.form.get('utility_cost') is None:
+        utility_cost = .1
+    else:
+        utility_cost = request.form.get('utility_cost')
+    
+    if request.form.get('material_cost') is None:
+        material_cost = .2
+    else:
+        material_cost = request.form.get('material_cost')
+    
+    if request.form.get('ad_cost') is None:
+        ad_cost = 100000
+    else:
+        ad_cost = request.form.get('ad_cost')
+
+    max_turnover = bussiness_hour * 60 / ave_time
+    servicenum = chair * max_turnover * booking_rate
+    benefit = servicenum * customer_price * days
+
+    initial_cost =  movingin_cost + moving_cost
+    if ( (initialInvestment - initial_cost) >= 0 ):
+        initial_check =  "Clear"
+    else:
+        initial_check = initialInvestment - initial_cost
+    
+
+    fixed_cost =   rent_cost + (hire_cost * 350000) + utility_cost
+    variable_cost = ( benefit * material_cost) + ad_cost
+
+    final_benefit = benefit - fixed_cost - variable_cost
+
+    ave_time = 200
+    #計算のデータをディクショナリにまとめる
+    result_data = {
+        'initialInvestment': initialInvestment,
+        'bussiness_hour': bussiness_hour,
+        'ave_time':ave_time,
+        # 他のデータも同様に追加
+        'final_benefit': final_benefit  # ここに最終結果を追加
+    }
 
     # レンダリングするHTMLを指定して表示
-    return render_template('calc.html', df_rent=df_rent)  # GeoInfoページのHTMLテンプレート名を指定
-
+    return render_template('calc.html', df_rent=df_rent, df_calc=result_data)  # GeoInfoページのHTMLテンプレート名を指定
 
 
 """

@@ -150,20 +150,3 @@ function validateInput(inputElement) {
     }
 }
 
-
-//計算のボタンが押されたときに実行されて、最終収益予測を表示する
-document.getElementById("calculateButton").addEventListener("click", function() {
-    // Submitボタンがクリックされたときに実行するコード
-    // ここでフォームのデータを取得し、計算を行う処理を実装
-
-    // 例: 初期投資可能額を取得
-    var initialInvestment = parseInt(document.getElementById("initial_investment").value);
-    // 他のフォームデータも同様に取得
-
-    // 計算を実行
-    // 例: var benefit = initialInvestment * hire * ...
-
-    // 計算結果を表示
-    var resultContainer = document.getElementById("resultContainer");
-    resultContainer.textContent = "月の利益：" + benefit + "円";
-});

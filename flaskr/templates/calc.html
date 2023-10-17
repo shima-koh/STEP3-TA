@@ -33,19 +33,20 @@
                 <a class="nav-link active" style= "padding: 8px 16px; font-weight: 700; color: darkgray;" aria-current="page" href="#" id="geoinfo-link">GeoInfo</a>
             </li>
             <li class="nav-item" style="background-color:black;  border-radius: 100px; text-align: center; margin-right: 20px;">
-                <a class="nav-link active" style= "padding: 8px 16px; font-weight: 700; color:white;" aria-current="page" href="#">Calc</a>
+                <a class="nav-link active" style= "padding: 8px 16px; font-weight: 700; color:white;" aria-current="page" href="#" >Calc</a>
             </li>
         </ul>
     </div>
 
-
+    <p>{{ df_calc['final_benefit'] }}</p>
     <div class="container" style="border: 2px solid lightgray; border-radius: 50px;">
         <div style="padding: 60px;">
 
             <h3>Setting<br></h3>
             <!---------------------------  form-------------------------------------->
-            <form class="row g-3 needs-validation" novalidate>
-                
+            <form class="row g-3 needs-validation" novalidate method="POST" action="/calc">
+                <!-- data-card-id をフォームに追加 -->
+                <input type="hidden" name="card_id" value="{{ df_rent['id'][0] }}">
                 <!----------------初期投資可能額--------------->
                 <div class="row">
                     <div class="col-3" style="margin-top: 5px;">
@@ -59,26 +60,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                <!----------------雇用人数-------------->
-                <div class="row" style="padding-top: 16px;">
-                    <div class="col-3" style="margin-top: 5px;">
-                        <label for="hire" class="form-label">雇用人数</label>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="hire" placeholder="200" onblur="validateInput(this)" aria-describedby="basic-addon2">
-                            <span class="input-group-text" id="basic-addon2">人</span>
-                            <div class="error-message" style="display: none;">整数を入力してください。</div>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <span id="assistantNum" class="form-text">
-                        1人当たりの雇用費用は給料20万円に保険・税等を加算して月35万で計算します。
-                        </span>
-                    </div>
-                </div>              
 
                 
                 <div class="row g-3 align-items-center">
@@ -254,6 +235,11 @@
                     <div class="col-auto" style="margin-top: 16px;">
                         <label for="servicenum" class="form-label">■固定費（家賃＋人件費＋光熱費）</label>
                     </div>
+                    <div class="col-auto">
+                        <span id="assistantNum" class="form-text">
+                        1人当たりの雇用費用は給料20万円に保険・税等を加算して月35万で計算します。
+                        </span>
+                    </div>
                     <div class="row" style="padding-top: 8px;">
     
                         <div class="col-2">
@@ -276,7 +262,7 @@
     
                         <div class="col-2">
                             <div class="input-group">
-                                <input type="integer" id="utility_cost_price" class="form-control" placeholder="80" aria-describedby="basic-addon2">
+                                <input type="integer" id="utility_cost" class="form-control" placeholder="80" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -285,7 +271,7 @@
         
                         <div class="col-3">
                             <div class="input-group">
-                                <input type="integer" id="max_turnover" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <input type="integer" id="fixed_cost" class="form-control" placeholder="15" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -318,7 +304,7 @@
         
                         <div class="col-3">
                             <div class="input-group">
-                                <input type="integer" id="max_turnover" class="form-control" placeholder="15" aria-describedby="basic-addon2">
+                                <input type="integer" id="variable_cost" class="form-control" placeholder="15" aria-describedby="basic-addon2">
                                 <span class="input-group-text" id="basic-addon2">円</span>
                             </div>
                         </div>
@@ -327,7 +313,7 @@
     
                 <!------------------calc button--------------------->
                 <div class="col-12" style="padding-top: 24px;">
-                    <button class="btn" type="submit" style="background-color: black; color: white; border-radius: 100px; ">再計算</button>
+                    <button class="btn"  id="reculc" type="submit" style="background-color: black; color: white; border-radius: 100px; ">再計算</button>
                 </div>
 
             </form>
@@ -338,7 +324,7 @@
             <!--------------------    Display      ---------------------------->
 
             <div class="col-auto" style="padding: 20px;">
-                <p>収支予測:<span id="resultContainer" style="font-size: 50px; font-weight: 700;"> 月の利益：XX円</span>（収支予測の折れ線グラフとかも一緒に出す？）</p>
+                <p>収支予測:<span id="resultContainer" style="font-size: 50px; font-weight: 700;"> 月の利益：{{ final_benefit }}</span>（収支予測の折れ線グラフとかも一緒に出す？）</p>
             </div>
             
             <div class="col-auto" style="padding: 20px;">
