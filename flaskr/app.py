@@ -211,104 +211,146 @@ def calc():
     query = f"SELECT * FROM Tenant WHERE id={card_id}"
     df_rent = pd.read_sql(query, db)
 
-    if request.form.get('initialInvestment') is None:
-        initialInvestment = 200
+    initial_investment = request.form.get('initial_investment')
+    if initial_investment is None or initial_investment.strip() == '':
+        initial_investment = 200
+        print("デフォルト値を設定しましたInvest")
     else:
-        initialInvestment = request.form.get('initialInvestment')
-    
-    if request.form.get('bussiness_hour') is None:
+        initial_investment = float(request.form.get('initial_investment'))
+
+    bussiness_hour = request.form.get('bussiness_hour')
+    if  bussiness_hour is None or bussiness_hour.strip() == '':
         bussiness_hour = 10
+        print("デフォルト値を設定しましたbusinessh")
     else:
-        bussiness_hour = request.form.get('bussiness_hour')
+        bussiness_hour = int(request.form.get('bussiness_hour'))
     
-    if request.form.get('ave_time') is None:
+    ave_time = request.form.get('ave_time')
+    if ave_time is None or ave_time.strip() == '':
         ave_time = 90
+        print("デフォルト値を設定しましたtime")
     else:
-        ave_time = request.form.get('ave_time')
+        ave_time = int(request.form.get('ave_time'))
         
-    if request.form.get('chair') is None:
+    chair = request.form.get('chair') 
+    if chair is None or chair.strip() == '':
         chair = 2
+        print("デフォルト値を設定しましたchair")
     else:
-        chair = request.form.get('chair')
+        chair = int(request.form.get('chair'))
     
-    if request.form.get('booking_rate') is None:
+    booking_rate = request.form.get('booking_rate') 
+    if booking_rate is None or booking_rate.strip() == '':
         booking_rate = .6
+        print("デフォルト値を設定しましたrate")
     else:    
-        booking_rate = request.form.get('booking_rate')
+        booking_rate = int(request.form.get('booking_rate'))
 
-    if  request.form.get('days') is None:
+    days = request.form.get('days')
+    if  days is None or days.strip() == '':
         days = 25
+        print("デフォルト値を設定しましたdays")
     else:
-        days = request.form.get('days')
+        days = int(request.form.get('days'))
 
-    if request.form.get('customer_price') is None:
+    customer_price = request.form.get('customer_price')
+    if customer_price is None or customer_price.strip() == '':
         customer_price = 5000
+        print("デフォルト値を設定しましたprice")
     else:
-        customer_price = request.form.get('customer_price')
+        customer_price = int(request.form.get('customer_price'))
     
-    if request.form.get(' movingin_cost') is None:
+    movingin_cost = request.form.get(' movingin_cost')
+    if movingin_cost is None or movingin_cost.strip() == '':
         movingin_cost = 6
+        print("デフォルト値を設定しましたin")
     else:
-        movingin_cost = request.form.get(' movingin_cost')
+        movingin_cost = int(request.form.get(' movingin_cost'))
     
-    if request.form.get('moving_cost') is None:
+    moving_cost = request.form.get('moving_cost')
+    if moving_cost is None or moving_cost.strip() == '':
         moving_cost = 500000
+        print("デフォルト値を設定しましたmove")
     else:
-        moving_cost = request.form.get('moving_cost')
+        moving_cost = int(request.form.get('moving_cost'))
     
-    if request.form.get('initial_cost') is None:
+    initial_cost = request.form.get('initial_cost')
+    if initial_cost is None or initial_cost.strip() == '':
         initial_cost = 0
+        print("デフォルト値を設定しましたinit")
     else:
-        initial_cost = request.form.get('initial_cost')
+        initial_cost = int(request.form.get('initial_cost'))
     
-    if request.form.get('rent_cost') is None:
+    rent_cost = request.form.get('rent_cost')
+    if rent_cost is None or rent_cost.strip() == '':
         rent_cost = 15
+        print("デフォルト値を設定しましたrent")
     else:
-        rent_cost = request.form.get('rent_cost')
+        rent_cost = int(request.form.get('rent_cost'))
     
-    if request.form.get('hire_cost') is None:
+    hire_cost = request.form.get('hire_cost')
+    if hire_cost is None or hire_cost.strip() == '':
         hire_cost = 3
+        print("デフォルト値を設定しましたhire")
     else:
-        hire_cost = request.form.get('hire_cost')
+        hire_cost = int(request.form.get('hire_cost'))
 
-    if request.form.get('utility_cost') is None:
+    utility_cost = request.form.get('utility_cost')
+    if utility_cost is None or utility_cost.strip() == '':
         utility_cost = .1
+        print("デフォルト値を設定しましたutil")
     else:
-        utility_cost = request.form.get('utility_cost')
+        utility_cost = float(request.form.get('utility_cost'))
     
-    if request.form.get('material_cost') is None:
+    material_cost = request.form.get('material_cost')
+    if material_cost is None or material_cost.strip() == '':
         material_cost = .2
+        print("デフォルト値を設定しましたmeter")
     else:
-        material_cost = request.form.get('material_cost')
+        material_cost = float(request.form.get('material_cost'))
     
-    if request.form.get('ad_cost') is None:
+    ad_cost = request.form.get('ad_cost')
+    if ad_cost is None or ad_cost.strip() == '':
         ad_cost = 100000
+        print("デフ入れるADno")
     else:
-        ad_cost = request.form.get('ad_cost')
+        ad_cost = int(request.form.get('ad_cost'))
 
     bussiness_minutes = 60
 
-    max_turnover = bussiness_hour * bussiness_minutes / ave_time
-    servicenum = chair * max_turnover * booking_rate
+    max_turnover = float(bussiness_hour) * float(bussiness_minutes) / float(ave_time)
+
+    if max_turnover is not None:
+        max_turnover_str = str(max_turnover)
+        print("回転計さんturn" + max_turnover_str)
+    else:
+        print("max_turnoverはNoneです。")
+
+    servicenum = chair * max_turnover * (booking_rate/100)
+    print("回転計さん"+  str(servicenum))
     benefit = servicenum * customer_price * days
+    print("回転計さん"+  str(benefit))
 
     initial_cost =  movingin_cost + moving_cost
+    print("回転計さん"+  str(initial_cost))
 
-    if ( (initialInvestment - initial_cost) >= 0 ):
+    if ( (initial_investment - initial_cost) >= 0 ):
         initial_check =  "Clear"
     else:
-        initial_check = initialInvestment - initial_cost
+        initial_check = initial_investment - initial_cost
     
 
     fixed_cost =   rent_cost + (hire_cost * 350000) + utility_cost
-    variable_cost = ( benefit * material_cost) + ad_cost
+    print("回転計さん"+  str(fixed_cost))
+    variable_cost = ( benefit * (material_cost/100)) + ad_cost
+    print("回転計さん"+  str(variable_cost))
 
-    final_benefit = benefit - fixed_cost - variable_cost
-    print("Final:--------------------"+final_benefit)
+    final_benefit = benefit - (fixed_cost + variable_cost)
+    print("Final:--------------------"+ str(final_benefit))
 
     #計算のデータをディクショナリにまとめる
     result_data = {
-        'initialInvestment': initialInvestment,
+        'initial_investment': initial_investment,
         'bussiness_hour': bussiness_hour,
         'bussiness_minutes': bussiness_minutes,
         'ave_time':ave_time,
@@ -322,7 +364,9 @@ def calc():
         'initial_cost':initial_cost,
         'movingin_cost':movingin_cost,
         'moving_cost':moving_cost,
+        
         'initial_check':initial_check,
+        
         'fixed_cost':fixed_cost,
         'rent_cost':rent_cost,
         'hire_cost':hire_cost,
