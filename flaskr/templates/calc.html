@@ -312,7 +312,7 @@
                     </div>
     
                 <!------------------calc button--------------------->
-                <div class="col-12" style="padding-top: 24px;">
+                <div class="col-12" style="padding-top: 24px; padding-bottom: 24px;">
                     <button class="btn"  id="reculc" type="submit" style="background-color: black; color: white; border-radius: 100px; ">再計算</button>
                 </div>
 
@@ -323,20 +323,29 @@
 
             <!--------------------    Display      ---------------------------->
 
-            <div class="col-auto" style="padding: 20px;">
-                <p>収支予測:<span style="font-size: 30px; font-weight: 700;"> 月の利益：{{ df_calc['final_benefit'] }}</span></p>
-            </div>
-            <p>{{ df_calc['initial_check'] }}</p>
-            
-            <div class="col-auto" style="padding: 20px;">
-                <p>Score:<span style="font-size: 50px; font-weight: 700;"> 75/100 </span></p>
+            <div class="text-center" style="padding: 20px; background-color:lightgray; border-radius: 50px;">
+
+                {% if(df_calc['initial_check']) == "Clear" %}
+                    <p>初期投資は十分のため、融資なしで事業を始められます。</p>
+                {% else %}
+                    <p>初期費用が{{ df_calc['initial_check'] }}円足りません。。
+                    <br>{{ df_calc['initial_check'] }}円の融資を受ける必要があります。</p>
+                {% endif %}
+                
+
+                {% if df_calc['final_benefit'] > 0 %}
+                <p>毎月の収支予測:<span style="font-size: 30px; font-weight: 700;">
+                    {{ df_calc['final_benefit'] }}円
+                <img class="" src="/static/images/arrow_blue.png" alt="arrow" height="30"></span></p>
+                {% else %}
+                <p style="font-weight: 500;">毎月の収支予測:<span style="font-size: 40px; font-weight: 700; color: red;"> 
+                    {{ df_calc['final_benefit'] }}円
+                <img class="" src="/static/images/arrow_red.png" alt="arrow" height="30"></span></p>
+                {% endif %}
+                
             </div>
 
         </div>
-
-
-
-
         
     </div>
     

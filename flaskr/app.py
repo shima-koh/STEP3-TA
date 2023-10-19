@@ -1,5 +1,9 @@
 from flaskr import app
 from flask import render_template, g, request, redirect, jsonify
+from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
 import sqlite3
 from io import BytesIO
 from PIL import Image
@@ -12,21 +16,98 @@ import json
 import folium
 from folium.plugins import HeatMap
 
-
-# テーブル作成
-#con.execute("CREATE TABLE Tenant(id INTEGER PRIMARY KEY, tena_name STRING, tena_stationId INTEGER)") #テナントDB
-#con.execute("CREATE TABLE User(id INTEGER PRIMARY KEY, user_name STRING, pw INTEGER)") #ユーザーDB
-
-
-
 # データベースファイルのパス
 DATABASE = 'app.db'
+# データベース接続を取得
+db = get_db()
 
 def get_db():
     # グローバルなデータベース接続がすでに存在する場合、それを返す
     if 'db' not in g:
         g.db = sqlite3.connect(DATABASE)
     return g.db
+
+with app.app_context():
+    data = SomeModel.query.all()
+
+with app.app_context():
+    new_data = SomeModel(some_field='some_value')
+    db.session.add(new_data)
+    db.session.commit()
+
+with app.app_context():
+    data_to_update = SomeModel.query.get(some_id)
+    data_to_update.some_field = 'new_value'
+    db.session.commit()
+
+with app.app_context():
+    data_to_delete = SomeModel.query.get(some_id)
+    db.session.delete(data_to_delete)
+    db.session.commit()
+
+
+
+
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(30), unique=True)
+    password = db.Column(db.String(12))
+
+# アプリケーションコンテキストを設定する
+@app.before_request
+def before_request():
+    g.db = get_db()  # データベース接続を取得
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        user = User(username=username, password=generate_password_hash(password, method='sha256'))
+
+        db.session.add(user)
+        db.session.commit()
+        return redirect('/login')
+    else:
+        return render_template('signup.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(username=username).first()
+        if check_password_hash(user.password, password):
+            login_user(user)
+            return redirect('/')
+    else:
+        return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/login')
+
+# テーブル作成
+#con.execute("CREATE TABLE Tenant(id INTEGER PRIMARY KEY, tena_name STRING, tena_stationId INTEGER)") #テナントDB
+#con.execute("CREATE TABLE User(id INTEGER PRIMARY KEY, user_name STRING, pw INTEGER)") #ユーザーDB
+
+
 
 # -----figをbase64形式に変換を関数化------
 def fig_to_base64_img(fig):
@@ -213,10 +294,11 @@ def calc():
 
     initial_investment = request.form.get('initial_investment')
     if initial_investment is None or initial_investment.strip() == '':
-        initial_investment = 200
+        initial_investment = 2000000
         print("デフォルト値を設定しましたInvest")
     else:
         initial_investment = float(request.form.get('initial_investment'))
+        initial_investment = initial_investment * 10000
 
     bussiness_hour = request.form.get('bussiness_hour')
     if  bussiness_hour is None or bussiness_hour.strip() == '':
@@ -241,7 +323,7 @@ def calc():
     
     booking_rate = request.form.get('booking_rate') 
     if booking_rate is None or booking_rate.strip() == '':
-        booking_rate = .6
+        booking_rate = 60
         print("デフォルト値を設定しましたrate")
     else:    
         booking_rate = int(request.form.get('booking_rate'))
@@ -274,16 +356,9 @@ def calc():
     else:
         moving_cost = int(request.form.get('moving_cost'))
     
-    initial_cost = request.form.get('initial_cost')
-    if initial_cost is None or initial_cost.strip() == '':
-        initial_cost = 0
-        print("デフォルト値を設定しましたinit")
-    else:
-        initial_cost = int(request.form.get('initial_cost'))
-    
     rent_cost = request.form.get('rent_cost')
     if rent_cost is None or rent_cost.strip() == '':
-        rent_cost = 15
+        rent_cost = df_rent["tena_rent"][0]
         print("デフォルト値を設定しましたrent")
     else:
         rent_cost = int(request.form.get('rent_cost'))
@@ -297,7 +372,7 @@ def calc():
 
     utility_cost = request.form.get('utility_cost')
     if utility_cost is None or utility_cost.strip() == '':
-        utility_cost = .1
+        utility_cost = 5000
         print("デフォルト値を設定しましたutil")
     else:
         utility_cost = float(request.form.get('utility_cost'))
@@ -329,24 +404,30 @@ def calc():
     servicenum = chair * max_turnover * (booking_rate/100)
     print("回転計さん"+  str(servicenum))
     benefit = servicenum * customer_price * days
+    benefit = int(benefit)
     print("回転計さん"+  str(benefit))
 
     initial_cost =  movingin_cost + moving_cost
-    print("回転計さん"+  str(initial_cost))
+    print("回転計さんinitial"+  str(initial_cost))
+    print("回転計さんInvest"+  str(initial_investment))
 
     if ( (initial_investment - initial_cost) >= 0 ):
         initial_check =  "Clear"
     else:
-        initial_check = initial_investment - initial_cost
+        initial_check = int(initial_investment) - int(initial_cost)
     
 
     fixed_cost =   rent_cost + (hire_cost * 350000) + utility_cost
     print("回転計さん"+  str(fixed_cost))
     variable_cost = ( benefit * (material_cost/100)) + ad_cost
+    variable_cost = int(variable_cost)
     print("回転計さん"+  str(variable_cost))
 
     final_benefit = benefit - (fixed_cost + variable_cost)
+    final_benefit = int(final_benefit)
     print("Final:--------------------"+ str(final_benefit))
+
+    initial_investment = initial_investment /10000
 
     #計算のデータをディクショナリにまとめる
     result_data = {
