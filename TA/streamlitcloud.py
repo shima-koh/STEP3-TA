@@ -60,11 +60,11 @@ st.sidebar.write('データ③: サロンイメージと内装費用の目安')
 image3 = Image.open("image/内装イメージ.jpg")
 st.sidebar.image(image3)
 
-seat_count = st.sidebar.slider('質問1. ご開業されるサロンのカット席数を選択して下さい。', 1, 4, 8)
+seat_count = st.sidebar.slider('質問1. ご開業されるサロンのカット席数を選択して下さい。', 1, 10, 2)
 
-interior_cost = st.sidebar.slider('質問2. ご開業されるサロンの内装費用(想定坪単価(万円))を選択して下さい。', 0, 10, 30)
+interior_cost = st.sidebar.slider('質問2. ご開業されるサロンの内装費用(想定坪単価(万円))を選択して下さい。', 0, 100, 30)
 
-stylist_count = st.sidebar.slider('質問3. ご開業されるサロンではスタイリストを何人雇用されますか。', 1, 10, 1, 1)
+stylist_count = st.sidebar.slider('質問3. ご開業されるサロンではスタイリストを何人雇用されますか。', 0, 10, 1, 1)
 
 turnover = st.sidebar.slider('質問4. ご開業されるサロンのカット席の最大回転数( = 営業時間(h/日) / お客様1人あたりの施術時間(h/人) ) を教えてください。', 1, 12, 6, 1)
 
@@ -74,7 +74,7 @@ st.sidebar.write('データ④ : スタイリストの平均年収')
 image4 = Image.open("image/スタイリストの年齢別年収.png")
 st.sidebar.image(image4)
 
-stylist_salary = st.sidebar.slider('質問6. サロンで雇用するスタイリストの想定給与(万円/月)を選択して下さい。※雇用されない場合は「0」を選択', 0, 10, 50, 1)
+stylist_salary = st.sidebar.slider('質問6. サロンで雇用するスタイリストの想定給与(万円/月)を選択して下さい。※雇用されない場合は「0」を選択', 0, 50, 25, 1)
 
 st.sidebar.write('データ⑤ : 女性客が1回の来店で使う金額')
 image5 = Image.open("image/女性がサロンで使った金額.png")
@@ -420,7 +420,8 @@ if st.sidebar.button("検索実行"):
             df8.drop('経度', axis=1, inplace=True)
             st.write(f' ・開業リスクの低いテナント上位5件  ※開業リスク = 損益分岐点売上 ÷ 想定売上')
             st.write(df8.head())
-            st.write(f'    ※リスク1.0以上の物件は目標利益を見込めない物件ですので、開業条件を見直す等ご検討下さい。')
+            st.write(f'    ※リスク1.0以上の物件は事業利益が30万円/月以下になる物件です。')
+            st.write(f'    ※リスク1.0未満の物件が無い場合、恐縮ではございますが開業条件の見直しもご検討下さい。')
             #st.write(f'    ※詳細に数値設定されたい場合は有料版のご利用をお願い致します。')
             st.write('')
 
@@ -434,10 +435,12 @@ if st.sidebar.button("検索実行"):
             first_station = station_data[0]
             station_longitude = first_station.get('x')
             station_latitude = first_station.get('y')
-            map = folium.Map(location=[station_latitude, station_longitude], zoom_start=13)  # 中心座標を設定して地図を作成
+            map = folium.Map(location=[station_latitude, station_longitude], zoom_start=12)  # 中心座標を設定して地図を作成
             # データフレーム内の各行の緯度と経度をマーカーとして地図上に表示
             for index, row in df8.iterrows():
-                folium.Marker([row['緯度'], row['経度']], popup=row['開業リスク']).add_to(map)
+                marker = folium.Marker([row['緯度'], row['経度']])
+                popup_contect = f"物件No：{index}"
+                folium.Popup(popup_contect).add_to(marker)
                 #500mの円を描画
                 folium.Circle(
                     location=[row['緯度'], row['経度']],
@@ -604,7 +607,7 @@ if st.sidebar.button("検索実行"):
             #500m圏内
             for i in range(5):
                 fig, ax = plt.subplots() 
-                plt.title('(物件' + str(df9_item[i]) + ") 商圏居住者の年間サロン利用額: " + str(int(round(result.loc[df9_item[i],'総額']))) + '千万円', fontsize = 18 )
+                plt.title('(index：' + str(df9_item[i]) + ") 商圏居住者の年間サロン利用額: " + str(int(round(result.loc[df9_item[i],'総額']))) + '千万円', fontsize = 18 )
                 plt.xlabel('年齢層', fontsize = 14 )
                 plt.ylabel('年間サロン利用額(千万円/年)', fontsize = 14 )
                 plt.bar(x_male, result_male.iloc[i] , width = 0.2, label = '男性')
@@ -614,6 +617,8 @@ if st.sidebar.button("検索実行"):
                 plt.legend()
                 plt.ylim(0, 10)  # 0から10までの範囲に調整            
                 st.pyplot(fig)
+            st.write(f' 理想の賃貸物件は見つかりましたか？')
+            st.write(f' 必要に応じて開業条件(例えば質問7の想定客単価など)も見直してみて下さい。')
     else:
     # リクエストがエラーの場合の処理
         st.warning("路線名、駅名を再確認して下さい。")
