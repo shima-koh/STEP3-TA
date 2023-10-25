@@ -1,5 +1,6 @@
 # ライブラリインポート
 import streamlit as st
+from streamlit_folium import st_folium
 import sqlite3
 import requests
 import pandas as pd
@@ -13,7 +14,7 @@ from PIL import Image
 from geopy.distance import geodesic
 import re
 import urllib.request
-import folium #地図機能
+import folium #地図機能  
 
 # DB読み込み
 conn = sqlite3.connect('STEP3チーム課題_TA_IndéMode_DB.db') # DB(SQLite)接続
@@ -435,12 +436,14 @@ if st.sidebar.button("検索実行"):
             first_station = station_data[0]
             station_longitude = first_station.get('x')
             station_latitude = first_station.get('y')
-            map = folium.Map(location=[station_latitude, station_longitude], zoom_start=12)  # 中心座標を設定して地図を作成
+            map = folium.Map(location=[station_latitude, station_longitude], zoom_start=15)  # 中心座標を設定して地図を作成
             # データフレーム内の各行の緯度と経度をマーカーとして地図上に表示
             for index, row in df8.iterrows():
-                marker = folium.Marker([row['緯度'], row['経度']])
-                popup_contect = f"物件No：{index}"
-                folium.Popup(popup_contect).add_to(marker)
+                folium.Marker(location=[row['緯度'], row['経度']],
+                            popup='検索物件No'+ str(index),
+                            icon=folium.Icon(color='red')).add_to(map)
+                #popup_contect = f"物件No：{index}"
+                #folium.Popup(popup_contect).add_to(marker)
                 #500mの円を描画
                 folium.Circle(
                     location=[row['緯度'], row['経度']],
@@ -450,11 +453,12 @@ if st.sidebar.button("検索実行"):
                     fill_color='#0000ff',  # 塗りつぶしの色
                     fill_opacity=0.1,  # 塗りつぶしの透明度                        popup='500m圏'  # 円に表示する説明
                 ).add_to(map)
+            #st_data = st_folium(map, width=1200, height=800)
             # 地図を表示    
             df8 = df8.rename(columns={'緯度': 'latitude', '経度': 'longitude'})
             df8['latitude'] = df8['latitude'].astype(float)
             df8['longitude'] = df8['longitude'].astype(float)
-            st.map(df8) 
+            st.map(df8)
             st.write('')
 
             st.write('■ おススメテナント上位5件の商圏(500m圏内)市場ポテンシャル分析')
