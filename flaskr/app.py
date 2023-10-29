@@ -1,8 +1,7 @@
-from flaskr import app
-from flask import render_template, g, request, redirect, jsonify
+from . import app, db
+from flask import render_template, g, request, redirect, jsonify, Flask
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
-
 
 import sqlite3
 from io import BytesIO
@@ -12,57 +11,42 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import json
+import os
+from flask_sqlalchemy import SQLAlchemy
 
 import folium
 from folium.plugins import HeatMap
 
+
+#def get_db():
+#    # グローバルなデータベース接続がすでに存在する場合、それを返す
+#    if 'db' not in g:
+#        g.db = sqlite3.connect(DATABASE)
+#    return g.db
+
+
 # データベースファイルのパス
-DATABASE = 'app.db'
+#DATABASE = 'app.db'
 # データベース接続を取得
-db = get_db()
 
-def get_db():
-    # グローバルなデータベース接続がすでに存在する場合、それを返す
-    if 'db' not in g:
-        g.db = sqlite3.connect(DATABASE)
-    return g.db
-
-with app.app_context():
-    data = SomeModel.query.all()
-
-with app.app_context():
-    new_data = SomeModel(some_field='some_value')
-    db.session.add(new_data)
-    db.session.commit()
-
-with app.app_context():
-    data_to_update = SomeModel.query.get(some_id)
-    data_to_update.some_field = 'new_value'
-    db.session.commit()
-
-with app.app_context():
-    data_to_delete = SomeModel.query.get(some_id)
-    db.session.delete(data_to_delete)
-    db.session.commit()
-
-
-
-
+#with app.app_context():
+#    # ここにデータベースアクセスや他の操作を記述
+#    # 例: db = get_db()
+#    db = get_db()
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-
-
 class User(UserMixin, db.Model):
+    __tablename__ = 'User'  # 既存のテーブル名
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(12))
 
 # アプリケーションコンテキストを設定する
-@app.before_request
-def before_request():
-    g.db = get_db()  # データベース接続を取得
+#@app.before_request
+#def before_request():
+#    g.db = get_db()  # データベース接続を取得
 
 
 @login_manager.user_loader
@@ -119,12 +103,13 @@ def fig_to_base64_img(fig):
     return base64_img
 
 @app.teardown_appcontext
-def close_db(error):
+#def close_db(error):
     # リクエストの終了時にデータベース接続をクローズ
-    db = g.pop('db', None)
-    if db is not None:
-        db.close()
-
+#    db = g.pop('db', None)
+#    if db is not None:
+#        db.close()
+def close_db(exception=None):
+    db.session.remove()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
